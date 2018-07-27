@@ -11,6 +11,7 @@ const remark = require("remark");
 const retext = require("retext");
 const visit = require("unist-util-visit");
 const remove = require("unist-util-remove");
+const toString = require("mdast-util-to-string");
 const stripMarkdown = require("strip-markdown");
 const grayMatter = require("gray-matter");
 const { createMdxAstCompiler } = require("@mdx-js/mdx");
@@ -61,6 +62,36 @@ import { MDXTag } from '@mdx-js/tag'
 ${code}`;
     }
 
+    const HeadingType = new GraphQLObjectType({
+      name: `MdxHeading`,
+      fields: {
+        value: {
+          type: GraphQLString,
+          resolve(heading) {
+            return heading.value;
+          }
+        },
+        depth: {
+          type: GraphQLInt,
+          resolve(heading) {
+            return heading.depth;
+          }
+        }
+      }
+    });
+
+    const HeadingLevels = new GraphQLEnumType({
+      name: `HeadingLevels`,
+      values: {
+        h1: { value: 1 },
+        h2: { value: 2 },
+        h3: { value: 3 },
+        h4: { value: 4 },
+        h5: { value: 5 },
+        h6: { value: 6 }
+      }
+    });
+
     return resolve({
       code: {
         type: GraphQLString,
@@ -91,6 +122,30 @@ ${code}`;
           });
 
           return prune(excerptNodes.join(" "), pruneLength, "…");
+        }
+      },
+      headings: {
+        type: new GraphQLList(HeadingType),
+        args: {
+          depth: {
+            type: HeadingLevels
+          }
+        },
+        async resolve(mdxNode, { depth }) {
+          const ast = await getAST(mdxNode);
+
+          let headings = [];
+          visit(ast, "heading", heading => {
+            headings.push({
+              value: toString(heading),
+              depth: heading.depth
+            });
+          });
+
+          if (typeof depth === `number`) {
+            headings = headings.filter(heading => heading.depth === depth);
+          }
+          return headings;
         }
       },
       timeToRead: {
