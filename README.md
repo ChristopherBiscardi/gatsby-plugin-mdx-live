@@ -83,8 +83,11 @@ some content
 ```
 
 Sometimes you don't want to include the layout in every file, so
-`gatsby-mdx` offers the option to set a default layout in the
-`gatsby-config.js` plugin config:
+`gatsby-mdx` offers the option to set default layouts in the
+`gatsby-config.js` plugin config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
+If no matching default layout is found, the `default` default layout is used.
+
+You can also set `options.defaultLayout` if you only want to use one layout for all MDX pages.
 
 ```javascript
 module.exports = {
@@ -95,9 +98,10 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        defaultLayout: require.resolve(
-          "./src/components/default-page-layout.js"
-        )
+        defaultLayouts: {
+          posts: require.resolve("./src/components/posts-layout.js"),
+          default: require.resolve("./src/components/default-page-layout.js")
+        }
       }
     }
   ]
