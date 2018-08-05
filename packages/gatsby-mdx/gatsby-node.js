@@ -25,11 +25,23 @@ exports.onCreateWebpackConfig = (
     options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
   );
 
+  const decks = options.decks.map(ext => `${escapeStringRegexp(ext)}`);
+
   actions.setWebpackConfig({
     module: {
       rules: [
         {
           test: testPattern,
+          include: decks,
+          use: [
+            loaders.js(),
+            { loader: "gatsby-mdx/mdx-deck-post-loader" },
+            { loader: "mdx-deck/loader" }
+          ]
+        },
+        {
+          test: testPattern,
+          exclude: decks,
           use: [
             loaders.js(),
             {
