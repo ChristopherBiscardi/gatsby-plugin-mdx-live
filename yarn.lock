@@ -9909,6 +9909,20 @@ styled-components@>=3.0.0:
     stylis-rule-sheet "^0.0.10"
     supports-color "^3.2.3"
 
+styled-components@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.4.1.tgz#a550783bba3a5bb9a41bf10d0e993c47d19a9125"
+  dependencies:
+    buffer "^5.0.3"
+    css-to-react-native "^2.0.3"
+    fbjs "^0.8.16"
+    hoist-non-react-statics "^2.5.0"
+    prop-types "^15.5.4"
+    react-is "^16.3.1"
+    stylis "^3.5.0"
+    stylis-rule-sheet "^0.0.10"
+    supports-color "^3.2.3"
+
 styled-system@^3.0.1, styled-system@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.0.2.tgz#2189a6d829117d212fb6ac8ebc4260fdb75d1109"
