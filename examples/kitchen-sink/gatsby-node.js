@@ -12,6 +12,7 @@ exports.createPages = ({ graphql, actions }) => {
                   fileAbsolutePath
                   fileNode {
                     name
+                    sourceInstanceName
                   }
                 }
               }
@@ -27,7 +28,7 @@ exports.createPages = ({ graphql, actions }) => {
         // Create blog posts pages.
         result.data.allMdx.edges.forEach(({ node }) => {
           createPage({
-            path: `/non-page/${node.fileNode.name}`,
+            path: `/${node.fileNode.sourceInstanceName}/${node.fileNode.name}`,
             component: node.fileAbsolutePath, //blogPost,
             context: { absPath: node.absolutePath }
           });
