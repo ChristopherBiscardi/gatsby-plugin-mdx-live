@@ -26,7 +26,7 @@ exports.onCreateWebpackConfig = (
   );
   const mdxTestPattern = new RegExp(
     options.extensions
-      .concat(".deck.mdx")
+      .concat(".deck-mdx")
       .map(ext => `${escapeStringRegexp(ext)}$`)
       .join("|")
   );
@@ -38,7 +38,7 @@ exports.onCreateWebpackConfig = (
       rules: [
         {
           test: testPattern,
-          exclude: decks.concat("/.deck.mdx$/"),
+          exclude: decks,
           use: [
             loaders.js(),
             {
@@ -52,7 +52,15 @@ exports.onCreateWebpackConfig = (
         },
         {
           test: mdxTestPattern,
-          include: decks.concat("/.deck.mdx$"),
+          include: decks,
+          use: [
+            loaders.js(),
+            { loader: "gatsby-mdx/mdx-deck-post-loader" },
+            { loader: "mdx-deck/loader" }
+          ]
+        },
+        {
+          test: /.deck-mdx$/,
           use: [
             loaders.js(),
             { loader: "gatsby-mdx/mdx-deck-post-loader" },
@@ -74,7 +82,7 @@ exports.onCreateWebpackConfig = (
  * determines which files in the pages/ directory get built as pages.
  */
 exports.resolvableExtensions = (data, pluginOptions) =>
-  [".deck.mdx"].concat(defaultOptions(pluginOptions).extensions);
+  defaultOptions(pluginOptions).extensions.concat(".deck-mdx");
 
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries.
@@ -86,8 +94,7 @@ exports.preprocessSource = async function preprocessSource(
   const { extensions, ...options } = defaultOptions(pluginOptions);
   const ext = path.extname(filename);
 
-  if (extensions.includes(ext) || ext === ".deck.mdx") {
-    console.log(filename, ext);
+  if (extensions.includes(ext) || ext === ".deck-mdx") {
     const code = await mdx(contents, options);
     return code;
   }
