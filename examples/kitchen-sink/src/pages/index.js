@@ -32,7 +32,7 @@ injectGlobal`
   }
 `;
 
-const Wrapper = styled.section`
+const Wrapper = styled("section")`
   align-items: center;
   background: #282a36;
   display: flex;
@@ -51,7 +51,7 @@ const IndexPage = ({ data }) => (
     </Helmet>
     <Wrapper>
       <h1
-        css={`
+        className={css`
           font-size: 1.5em;
           color: #ff79c6;
           margin-bottom: 0.5em;
@@ -59,7 +59,7 @@ const IndexPage = ({ data }) => (
       >
         Hello World, this is my first component styled with{` `}
         <a
-          css={`
+          className={css`
             color: #8be9fd;
           `}
           href="https://emotion.sh/"
@@ -68,13 +68,13 @@ const IndexPage = ({ data }) => (
         </a>!
       </h1>
       <p
-        css={`
+        className={css`
           color: #bd93f9;
         `}
       >
         <a
           href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
-          css={`
+          className={css`
             color: inherit;
           `}
         >
@@ -82,21 +82,21 @@ const IndexPage = ({ data }) => (
         </a>
       </p>
       <h2
-        css={`
+        className={css`
           margin-top: 1.5em;
         `}
       >
         Example Pages
       </h2>
       <ul
-        css={`
+        className={css`
           list-style-type: none;
         `}
       >
         {data.allSitePage.edges.map(({ node }) => (
           <li>
             <Link
-              css={`
+              className={css`
                 color: #8be9fd;
               `}
               to={node.path}

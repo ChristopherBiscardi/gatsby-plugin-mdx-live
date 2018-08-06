@@ -5,7 +5,6 @@ module.exports = {
     title: `Gatsby MDX Kitchen Sink`
   },
   plugins: [
-    `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-mdx`,

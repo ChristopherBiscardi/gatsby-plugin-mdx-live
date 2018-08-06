@@ -20,5 +20,8 @@
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "prettier": "^1.13.7"
+  },
+  "resolutions": {
+    "styled-components": "3.4.1"
   }
 }
