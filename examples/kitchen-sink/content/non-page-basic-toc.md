@@ -1,0 +1,36 @@
+# Something if
+
+## Something else
+
+Text.
+
+## Something elsefi
+
+# Something iffi
+
+export default (props) => {
+const { children, pageContext } = props
+const Nav = ({ item, level }) => {
+let items = null
+if (item.items) {
+items = (
+<ul style={{ marginLeft: `${level * 10}px`}}>
+{item.items.map(i => <Nav item={i} key={i.title} level={level+1} />)}
+</ul>
+)
+}
+if (!item.title) {
+return items
+}
+return (
+<li><a href={item.url}>{item.title}</a>{items}</li>
+)
+}
+return (
+<React.Fragment>
+<h1>toc</h1>
+<Nav item={pageContext.tableOfContents} level={0} />
+{children}
+</React.Fragment>
+)
+}

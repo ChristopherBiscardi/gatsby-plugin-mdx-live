@@ -8,7 +8,7 @@ exports.createPages = ({ graphql, actions }) => {
             allMdx {
               edges {
                 node {
-                  relativePath
+                  tableOfContents
                   fileAbsolutePath
                   fileNode {
                     name
@@ -30,7 +30,10 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: `/${node.fileNode.sourceInstanceName}/${node.fileNode.name}`,
             component: node.fileAbsolutePath, //blogPost,
-            context: { absPath: node.absolutePath }
+            context: {
+              absPath: node.absolutePath,
+              tableOfContents: node.tableOfContents
+            }
           });
         });
       })
