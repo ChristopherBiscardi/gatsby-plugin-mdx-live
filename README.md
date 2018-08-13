@@ -220,7 +220,7 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: `/non-page/${node.fileNode.name}`,
             component: node.fileAbsolutePath, //blogPost,
-            context: { absPath: node.absolutePath }
+            context: { absPath: node.fileAbsolutePath }
           });
         });
       })
