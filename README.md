@@ -345,6 +345,10 @@ module.exports = {
 };
 ```
 
+# Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 [mdx]: https://github.com/mdx-js/mdx
 [gatsby]: https://www.gatsbyjs.org/
 [mdx-deck]: https://github.com/jxnblk/mdx-deck
