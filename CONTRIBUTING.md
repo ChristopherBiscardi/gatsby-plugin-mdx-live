@@ -13,7 +13,7 @@ yarn
 This project uses [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to manage multiple packages within one repository. Check out the `workspaces` key within `package.json` to view all possible workspace directories. Some workspaces of note:
 
 - `packages/gatsby-mdx`: the source for the gatsby-mdx plugin
-- `examples/docs`: the gatsby-mdx docs site (built with [Gatsby](https://www.gatsbyjs.org/))
+- `examples/docs`: the gatsby-mdx docs site (built with [Gatsby](https://next.gatsbyjs.org/))
 
 ## Submitting a bug report
 
