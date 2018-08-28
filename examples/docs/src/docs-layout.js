@@ -6,11 +6,19 @@ import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { MDXProvider } from "@mdx-js/tag";
 
 import Highlight, { defaultProps } from "prism-react-renderer";
+import { ThemeProvider } from "emotion-theming";
+import { Container, components, Pre } from "./components";
+
+const theme = {
+  fonts: {
+    mono: '"SF Mono", "Roboto Mono", Menlo, monospace'
+  }
+};
 
 const CodeBlock = ({ children: exampleCode }) => (
   <Highlight {...defaultProps} code={exampleCode} language="jsx">
     {({ className, style, tokens, getLineProps, getTokenProps }) => (
-      <pre className={className} style={style}>
+      <Pre className={className} style={style} p={3}>
         {tokens.map((line, i) => (
           <div {...getLineProps({ line, key: i })}>
             {line.map((token, key) => (
@@ -18,7 +26,7 @@ const CodeBlock = ({ children: exampleCode }) => (
             ))}
           </div>
         ))}
-      </pre>
+      </Pre>
     )}
   </Highlight>
 );
@@ -28,19 +36,21 @@ export default class MDXRuntimeTest extends Component {
     const { children, data, tableOfContents } = this.props;
 
     return (
-      <MDXProvider
-        components={{
-          code: CodeBlock
-        }}
-      >
-        <div>
-          <h1>Uses MDXRenderer</h1>
-          <div>{children}</div>
-          <MDXRenderer tableOfContents={tableOfContents}>
-            {data.mdx.code.body}
-          </MDXRenderer>
-        </div>
-      </MDXProvider>
+      <ThemeProvider theme={theme}>
+        <MDXProvider
+          components={{
+            ...components,
+            code: CodeBlock
+          }}
+        >
+          <Container>
+            {children}
+            <MDXRenderer tableOfContents={tableOfContents}>
+              {data.mdx.code.body}
+            </MDXRenderer>
+          </Container>
+        </MDXProvider>
+      </ThemeProvider>
     );
   }
 }

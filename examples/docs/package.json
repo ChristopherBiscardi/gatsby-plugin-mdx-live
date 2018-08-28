@@ -9,6 +9,7 @@
     "@mdx-js/mdx": "^0.15.0-2",
     "emotion": "^9.1.3",
     "emotion-server": "^9.1.3",
+    "emotion-theming": "^9.2.6",
     "gatsby": "next",
     "gatsby-mdx": "*",
     "gatsby-plugin-emotion": "next",
@@ -18,7 +19,8 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-emotion": "^9.1.3",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "system-components": "^3.0.0"
   },
   "license": "MIT",
   "main": "n/a",
