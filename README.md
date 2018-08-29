@@ -225,8 +225,8 @@ exports.createPages = ({ graphql, actions }) => {
         result.data.allMdx.edges.forEach(({ node }) => {
           createPage({
             path: `/non-page/${node.parent.name}`,
-            component: node.absolutePath,
-            context: { absPath: node.absolutePath }
+            component: node.parent.absolutePath,
+            context: { absPath: node.parent.absolutePath }
           });
         });
       })
