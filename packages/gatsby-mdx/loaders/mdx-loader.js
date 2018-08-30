@@ -12,11 +12,13 @@ const {
 
 const toMDAST = require("remark-parse");
 const squeeze = require("remark-squeeze-paragraphs");
+const debug = require("debug")("gatsby-mdx:mdx-loader");
 
 const mdx = require("../utils/mdx");
 const getSourcePluginsAsRemarkPlugins = require("../utils/get-source-plugins-as-remark-plugins");
 const withDefaultOptions = require("../utils/default-options");
-const debug = require("debug")("gatsby-mdx:mdx-loader");
+const createMDXNode = require("../utils/create-mdx-node");
+const { createFileNode } = require("../utils/create-fake-file-node");
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
@@ -91,12 +93,28 @@ module.exports = async function(content) {
 
   const options = withDefaultOptions(pluginOptions);
 
-  const fileNode = getNodes().find(
+  let fileNode = getNodes().find(
     node =>
       node.internal.type === `File` && node.absolutePath === this.resourcePath
   );
+  if (!fileNode) {
+    fileNode = await createFileNode(
+      this.resourcePath,
+      pth => `fakeFileNodeMDX${pth}`
+    );
+  }
 
   const source = fileNode && fileNode.sourceInstanceName;
+
+  const mdxNode = await createMDXNode(
+    {
+      createNodeId: () => "fakeNodeIdMDXFileABugIfYouSeeThis",
+      node: fileNode,
+      transform: () => ({ meta: undefined, content })
+    },
+    undefined,
+    { __internalMdxTypeName: "Mdx", __shouldCreateNode: false }
+  );
 
   // get the default layout for the file source group, or if it doesn't
   // exist, the overall default layout
@@ -123,7 +141,7 @@ ${contentWithoutFrontmatter}`;
 
   const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins({
     gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-    markdownNode: undefined,
+    markdownNode: mdxNode,
     //          files,
     getNode,
     getNodes,
