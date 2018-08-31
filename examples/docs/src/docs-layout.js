@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import { graphql } from "gatsby";
-
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { MDXProvider } from "@mdx-js/tag";
-
-import { ThemeProvider } from "emotion-theming";
-import { Container, theme, mdxProviderComponents } from "./components";
+import { ThemeProvider, Container, mdxProviderComponents } from "./components";
 
 export default class MDXRuntimeTest extends Component {
   render() {
     const { children, data, tableOfContents } = this.props;
 
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <MDXProvider components={mdxProviderComponents}>
           <Container>
             {children}
