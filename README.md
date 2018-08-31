@@ -298,60 +298,9 @@ export default class MyPageLayout extends Component {
 }
 ```
 
----
+# Extensions
 
-# Experimental
-
-Experimental things could be volatile. Use at your own risk.
-
-## MDX Deck
-
-To embed mdx-deck presentations in your gatsby site, add mdx deck to
-your dependencies (in addition to the gatsby-mdx and it's
-dependencies).
-
-```shell
-npm install mdx-deck
-```
-
-Add the relevant config to your `gatsby-config.js`. In this example,
-we use set the required `decks` key in the gatsby-mdx plugin config to
-point to our folder of slide decks and the filesystem source to point
-to our decks folder. We also set a `defaultLayout` that wraps every
-individual slide.
-
-```javascript
-const path = require("path");
-
-module.exports = {
-  siteMetadata: {
-    title: `Gatsby MDX Kitchen Sink`
-  },
-  plugins: [
-    `gatsby-plugin-emotion`,
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-mdx`,
-      options: {
-        extensions: [".mdx", ".md"],
-        decks: [path.resolve("./decks")],
-        defaultLayouts: {
-          default: require.resolve("./src/components/default-page-layout.js"),
-          slides: require.resolve("./src/components/default-slide-layout.js")
-        }
-      }
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "slides",
-        path: `${__dirname}/decks/`
-      }
-    },
-    `gatsby-plugin-offline`
-  ]
-};
-```
+- [MDX Deck](examples/docs/content/docs/extensions/mdx-deck.mdx)
 
 # Contributing
 
