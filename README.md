@@ -23,41 +23,11 @@ The best of both worlds. :globe_with_meridians:
 
 [See the MDX specification](https://github.com/mdx-js/specification)
 
-## Using Design System Components
-
-Using MDX, you can replace every HTML element that Markdown renders with a
-custom implementation. This allows you to use a set of design system components
-when rendering Markdown.
-
-```js
-// src/components/layout.js
-
-import { MDXProvider } from "@mdx-js/tag";
-import * as DesignSystem from "your-design-system";
-
-export default function Layout({ children }) {
-  return (
-    <MDXProvider
-      components={{
-        // Map HTML element tag to React component
-        h1: DesignSystem.H1,
-        h2: DesignSystem.H2,
-        h3: DesignSystem.H3,
-        // Or define component inline
-        p: props => <p {...props} style={{ color: "rebeccapurple" }} />
-      }}
-    >
-      {children}
-    </MDXProvider>
-  );
-}
-```
-
-# Extensions
+## Extensions
 
 - [MDX Deck](examples/docs/content/docs/extensions/mdx-deck.mdx)
 
-# Contributing
+## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
