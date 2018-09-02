@@ -1,0 +1,30 @@
+# Getting Started with Gatsby+MDX
+
+There are two ways to get started with Gatsby+MDX. You can [add
+support to an existing site](#add-to-existing-site) or you can use an
+MDX based [starter](#use-a-starter).
+
+## Add to Existing Gatsby Site
+
+To use `gatsby-mdx` with a pre-existing gatsby site install
+`gatsby-mdx` as well as MDX itself which comes in two packages
+(`@mdx-js/mdx` and `@mdx-js/tag`)
+
+```bash
+npm install gatsby-mdx @mdx-js/mdx @mdx-js/tag
+```
+
+then add `gatsby-mdx` to your `gatsby-config.js` in the `plugins` section.
+
+```javascript
+module.exports = {
+  plugins: [`gatsby-mdx`]
+};
+```
+
+_Note: `gatsby-mdx` is [only compatible with Gatsby version 2 or
+newer](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/22)._
+
+## Use a Starter
+
+TODO: write the starter and this section

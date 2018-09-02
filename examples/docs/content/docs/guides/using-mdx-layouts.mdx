@@ -1,0 +1,70 @@
+# Using MDX Layouts
+
+[MDX Layouts][mdx-layouts] are built into the MDX format and are
+different than the layouts you may be familiar with if you used gatsby
+1.0. An MDX layout is defined as the default export in an MDX file.
+
+```javascript
+export default ({ children }) => (
+  <div>
+    <h1>My Layout</h1>
+    <div>{children}</div>
+  </div>
+)
+
+# My MDX
+
+some content
+```
+
+or as an import:
+
+```javascript
+import PageLayout from './src/components/page-layout';
+export default PageLayout
+
+# My MDX
+
+some content
+```
+
+MDX Layouts are built into the MDX content and so can be used to wrap
+the MDX content every time it is used anywhere across the site.
+
+## Default Layouts
+
+Sometimes you don't want to write the layout into every file, so
+`gatsby-mdx` offers the option to set default layouts in the
+`gatsby-config.js` plugin config.  This removes the need to import and
+re-export an MDX layout for an entire set of MDX files.
+
+To apply a default layout, for example when sourcing MDX content with
+`gatsby-source-filesystem`, set the key to the `name` set in the
+`gatsby-source-filesystem` config. If no matching default layout is
+found, the `default` default layout is used. If there is no matching
+layout and no default layout, there is no layout injected.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-mdx`,
+      options: {
+        defaultLayouts: {
+          posts: require.resolve("./src/components/posts-layout.js"),
+          default: require.resolve("./src/components/default-page-layout.js")
+        }
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`
+      }
+    }
+  ]
+};
+```
+
+[mdx-layouts]: TODO

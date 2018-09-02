@@ -1,0 +1,42 @@
+### Querying MDX Content via GraphQL
+
+MDX files sourced via `gatsby-source-filesystem` can be queried with
+`allMdx` on the root query. Like `gatsby-transformer-remark`, `gatby-mdx`
+ adds fields to the Mdx node including `excerpt`, `headings`,
+ `timeToRead`, and `wordCount`.
+
+TODO: insert full GraphQL MDX Node Schema
+
+All static exports – values that would be valid JSON – are queryable
+through the `exports` field.
+
+```graphql
+query MDXQuery {
+  allMdx {
+    edges {
+      node {
+        parent {
+          ... on File {
+            name
+            absolutePath
+            relativePath
+          }
+        }
+        timeToRead
+        frontmatter {
+          title
+        }
+        exports {
+          author
+        }
+      }
+    }
+  }
+}
+```
+
+## Accessing Parents
+
+MDX Nodes typically have a parent source.
+
+TODO: explain `parent { ... on File { absolutePath} }` query fragments

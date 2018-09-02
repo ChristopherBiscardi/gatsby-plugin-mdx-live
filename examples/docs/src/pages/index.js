@@ -80,11 +80,16 @@ const IndexPage = ({ data }) => (
     </Wrapper>
     <div>
       <ul>
-        {data.allMdx.edges.map(({ node }) => (
-          <li key={node.id}>
-            <a href={`/${node.fields.slug}`}>{node.fields.slug}</a>
-          </li>
-        ))}
+        {data.allMdx.edges
+          .sort(
+            ({ node: { fields: a } }, { node: { fields: b } }) =>
+              a.slug > b.slug
+          )
+          .map(({ node }) => (
+            <li key={node.id}>
+              <a href={`/${node.fields.slug}`}>{node.fields.slug}</a>
+            </li>
+          ))}
       </ul>
     </div>
   </Fragment>

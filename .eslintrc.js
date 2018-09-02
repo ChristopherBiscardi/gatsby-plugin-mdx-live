@@ -8,6 +8,11 @@ module.exports = {
       jsx: true
     }
   },
+  settings: {
+    react: {
+      version: "16.4.0"
+    }
+  },
   env: { node: true, es6: true },
   rules: { "react/prop-types": false },
   overrides: [

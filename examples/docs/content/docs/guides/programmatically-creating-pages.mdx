@@ -1,0 +1,80 @@
+# Programmatically Creating Pages
+
+Pages can be created programmatically by combining a source plugin in
+`gatsby-config.js` with some `createPage` calls in
+`gatsby-node.js`. For example, using `gatsby-source-filesystem` we can
+point to a folder of MDX files and name the collection `"posts"`. 
+
+```javascript
+// gatsby-config.js
+
+module.exports = {
+  plugins: [
+    `gatsby-mdx`,
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "posts",
+        path: `${__dirname}/content/`
+      }
+    }
+  ]
+};
+```
+
+Then, we can [query the GraphQL
+schema](/docs/guides/querying-mdx-content-via-graphql) for our MDX
+content and create pages from it. Creating pages from MDX content
+requires us to manipulate the scope of the MDX file.
+
+```javascript
+// gatsby-node.js
+const componentWithMDXScope = require("gatsby-mdx/component-with-mdx-scope");
+
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions;
+  return new Promise((resolve, reject) => {
+    resolve(
+      graphql(
+        `
+          {
+            allMdx {
+              edges {
+                node {
+                  id
+                  parent {
+                    ... on File {
+                      name
+                      sourceInstanceName
+                    }
+                  }
+                  code {
+                    scope
+                  }
+                }
+              }
+            }
+          }
+        `
+      ).then(result => {
+        if (result.errors) {
+          console.log(result.errors);
+          reject(result.errors);
+        }
+
+        // Create blog posts pages.
+        result.data.allMdx.edges.forEach(({ node }) => {
+          createPage({
+            path: `/${sourceInstanceName}/${node.parent.name}`,
+            component: componentWithMDXScope(
+                path.resolve("./src/components/posts-page-layout.js"),
+                node.code.scope,
+              ),
+            context: { id: node.id }
+          });
+        });
+      })
+    );
+  });
+};
+```
