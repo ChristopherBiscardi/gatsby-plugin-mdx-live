@@ -1,4 +1,3 @@
-// import React from 'react';
 import styled from "react-emotion";
 
 const notificationTypes = {
@@ -11,20 +10,20 @@ const notificationTypes = {
     light: "rosybrown"
   },
   info: {
-    dark: "cadetblue",
-    light: "aliceblue"
+    dark: "#663399",
+    light: "#FFFFFF"
   }
 };
 
 const getColor = (type = "info", shade = "dark") =>
   notificationTypes[type][shade];
 
-const Notification = styled("section")`
-  border: 1px solid ${props => getColor(props.type)};
-  color: ${props => getColor(props.type)};
-  background: ${props => getColor(props.type, "light")};
-  display: grid;
-  padding: 15px;
+const Notification = styled.section`
+  color: ${props => getColor(props.type, "light")};
+  background: ${props => getColor(props.type)};
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
 `;
 
 export default Notification;

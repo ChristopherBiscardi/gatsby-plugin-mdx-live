@@ -1,5 +1,5 @@
-import * as React from "react";
-import Heading from "./heading";
+import React from "react";
+import Heading from "../heading";
 import Text from "./text";
 import Code from "./code";
 import CodeBlock from "./codeBlock";
@@ -16,7 +16,7 @@ export default {
   p: props => <Text {...props} is="p" lineHeight={1.625} mt={3} mb={4} />,
   pre: Pre,
   code: CodeBlock,
-  inlineCode: props => <Code {...props} bg="lightgray" p={1} />
+  inlineCode: props => <Code {...props} />
   // TODO add `a`
   // TODO add `img`
   // TODO add `blockquote`

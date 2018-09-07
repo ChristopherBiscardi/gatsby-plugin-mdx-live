@@ -35,12 +35,11 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: node.fields.slug,
             component: componentWithMDXScope(
-              path.resolve("./src/docs-layout.js"),
+              path.resolve("./src/templates/docs.js"),
               node.code.scope,
               __dirname
             ),
             context: {
-              tableOfContents: node.tableOfContents,
               id: node.id
             }
           });
@@ -70,11 +69,16 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
   if (node.internal.type === `Mdx`) {
     const parent = getNode(node.parent);
-    const value = parent.relativePath.replace(parent.ext, "");
+    let value = parent.relativePath.replace(parent.ext, "");
+
+    if (value === "getting-started") {
+      value = "";
+    }
+
     createNodeField({
       name: `slug`,
       node,
-      value
+      value: `/${value}`
     });
   }
 };

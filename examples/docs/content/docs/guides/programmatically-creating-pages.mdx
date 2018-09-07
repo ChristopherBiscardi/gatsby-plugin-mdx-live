@@ -1,9 +1,11 @@
-# Programmatically Creating Pages
+---
+title: "Programmatically Creating Pages"
+---
 
 Pages can be created programmatically by combining a source plugin in
 `gatsby-config.js` with some `createPage` calls in
 `gatsby-node.js`. For example, using `gatsby-source-filesystem` we can
-point to a folder of MDX files and name the collection `"posts"`. 
+point to a folder of MDX files and name the collection `"posts"`.
 
 ```javascript
 // gatsby-config.js
@@ -67,9 +69,9 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: `/${sourceInstanceName}/${node.parent.name}`,
             component: componentWithMDXScope(
-                path.resolve("./src/components/posts-page-layout.js"),
-                node.code.scope,
-              ),
+              path.resolve("./src/components/posts-page-layout.js"),
+              node.code.scope
+            ),
             context: { id: node.id }
           });
         });
