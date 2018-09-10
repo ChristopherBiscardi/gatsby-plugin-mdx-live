@@ -26,6 +26,7 @@ jobs:
             - ~/.cache/yarn        
 
       - run: yarn workspace gatsby-mdx test
+      - run: yarn workspace babel-plugin-gather-exports test
       - run: yarn workspace babel-plugin-pluck-imports test
       - run: yarn workspace babel-plugin-pluck-exports test
       - run: yarn lint
