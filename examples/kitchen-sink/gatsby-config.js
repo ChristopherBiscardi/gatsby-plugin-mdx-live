@@ -11,8 +11,7 @@ module.exports = {
 
         defaultLayouts: {
           posts: require.resolve("./src/components/default-post-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js"),
-          slides: require.resolve("./src/components/default-slide-layout.js")
+          default: require.resolve("./src/components/default-page-layout.js")
         }
       }
     },
