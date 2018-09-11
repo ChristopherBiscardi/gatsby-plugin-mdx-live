@@ -5,6 +5,10 @@ different than the layouts you may be familiar with if you used gatsby
 1.0. An MDX layout is defined as the default export in an MDX file.
 
 ```javascript
+# My MDX
+
+some content
+
 export default ({ children }) => (
   <div>
     <h1>My Layout</h1>
@@ -12,20 +16,19 @@ export default ({ children }) => (
   </div>
 )
 
-# My MDX
-
-some content
 ```
 
 or as an import:
 
 ```javascript
 import PageLayout from './src/components/page-layout';
-export default PageLayout
 
 # My MDX
 
 some content
+
+
+export default PageLayout
 ```
 
 MDX Layouts are built into the MDX content and so can be used to wrap
