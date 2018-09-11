@@ -36,35 +36,19 @@ exports.createPages = ({ graphql, actions }) => {
 
         // Create blog posts pages.
         result.data.allMdx.edges.forEach(({ node }) => {
-          if (node.parent.sourceInstanceName === "slides") {
-            createPage({
-              path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
-              component:
-                node.parent
-                  .absolutePath /* componentWithMDXScope(
-                            path.resolve("./src/components/mdx-runtime-slides-test.js"),
-                            node.codeScope,
-                            __dirname
-                            ), */,
-              context: {
-                id: node.id
-              }
-            });
-          } else {
-            createPage({
-              path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
-              component: componentWithMDXScope(
-                path.resolve("./src/components/mdx-runtime-test.js"),
-                node.code.scope,
-                __dirname
-              ),
-              context: {
-                absPath: node.parent.absolutePath,
-                tableOfContents: node.tableOfContents,
-                id: node.id
-              }
-            });
-          }
+          createPage({
+            path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
+            component: componentWithMDXScope(
+              path.resolve("./src/components/mdx-runtime-test.js"),
+              node.code.scope,
+              __dirname
+            ),
+            context: {
+              absPath: node.parent.absolutePath,
+              tableOfContents: node.tableOfContents,
+              id: node.id
+            }
+          });
         });
 
         // manually create a page with a lot of mdx
