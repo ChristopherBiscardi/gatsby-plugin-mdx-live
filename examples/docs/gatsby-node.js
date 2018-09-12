@@ -33,7 +33,7 @@ exports.createPages = ({ graphql, actions }) => {
         // Create blog posts pages.
         result.data.allMdx.edges.forEach(({ node }) => {
           createPage({
-            path: node.fields.slug,
+            path: node.fields.slug ? node.fields.slug : "/",
             component: componentWithMDXScope(
               path.resolve("./src/templates/docs.js"),
               node.code.scope,
@@ -71,7 +71,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const parent = getNode(node.parent);
     let value = parent.relativePath.replace(parent.ext, "");
 
-    if (value === "getting-started") {
+    if (value === "index") {
       value = "";
     }
 
