@@ -3,6 +3,13 @@ module.exports = {
     title: `Gatsby MDX with Custom Remark Plugins`
   },
   plugins: [
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "liek",
+        path: `${__dirname}/src/pages`
+      }
+    },
     `gatsby-plugin-emotion`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,

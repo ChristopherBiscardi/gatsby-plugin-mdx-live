@@ -83,7 +83,7 @@ const hasDefaultExport = (str, options) => {
 module.exports = async function(content) {
   const callback = this.async();
   const {
-    getNode,
+    getNode: rawGetNode,
     getNodes,
     reporter,
     cache,
@@ -97,11 +97,13 @@ module.exports = async function(content) {
     node =>
       node.internal.type === `File` && node.absolutePath === this.resourcePath
   );
+  let isFakeFileNode = false;
   if (!fileNode) {
     fileNode = await createFileNode(
       this.resourcePath,
       pth => `fakeFileNodeMDX${pth}`
     );
+    isFakeFileNode = true;
   }
 
   const source = fileNode && fileNode.sourceInstanceName;
@@ -139,10 +141,16 @@ export default DefaultLayout
 ${contentWithoutFrontmatter}`;
   }
 
+  const getNode = id => {
+    if (isFakeFileNode && id === fileNode.id) {
+      return fileNode;
+    } else {
+      return rawGetNode(id);
+    }
+  };
   const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins({
     gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-    markdownNode: mdxNode,
-    //          files,
+    mdxNode,
     getNode,
     getNodes,
     reporter,
