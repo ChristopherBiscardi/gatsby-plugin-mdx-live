@@ -18,14 +18,6 @@ module.exports = {
       resolve: `gatsby-mdx`,
       options: {
         root: __dirname,
-        extensions: ['.md', '.mdx'],
-        transformers: {
-          ContentfulBlogPost: ({ node, getNode }) => {
-            const { title } = node
-            const mdxContent = getNode(node.mdxContent___NODE)
-            return { meta: { title }, content: mdxContent.mdxContent }
-          },
-        },
         plugins: [
           {
             resolve: `gatsby-remark-images`,
@@ -53,7 +45,57 @@ module.exports = {
         //trackingId: `ADD YOUR TRACKING ID HERE`,
       },
     },
-    `gatsby-plugin-feed`,
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.edges.map(edge => {
+                return {
+                  title: edge.node.fields.title,
+                  date: edge.node.fields.date,
+                  description: edge.node.excerpt,
+                  url: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                  guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                }
+              })
+            },
+            query: `
+              {
+                allMdx(
+                  limit: 1000,
+                  sort: { fields: [fields___date], order: DESC }
+                ) {
+                  edges {
+                    node {
+                      excerpt
+                      fields {
+                        slug
+                        title
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: '/rss.xml',
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -69,17 +111,18 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: 'gatsby-plugin-typography',
-      options: {
-        pathToConfigModule: 'src/utils/typography',
-      },
-    },
-    {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: `cv6pzg7afxkc`,
-        accessToken: `d7a4016305708c822edd6e827015f1e38830453fa21df3b507c4c4c6b3ac96f9`,
+        spaceId: 'cv6pzg7afxkc',
+        accessToken:
+          'e3b8b6fe2efca26de7d87bf9f42f0436e2249e8d9348cc1ad733cfb30cf4699e',
       },
     },
+    // {
+    //   resolve: 'gatsby-plugin-typography',
+    //   options: {
+    //     pathToConfigModule: `src/utils/typography`,
+    //   },
+    // },
   ],
 }
