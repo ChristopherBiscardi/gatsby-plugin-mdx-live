@@ -15,7 +15,7 @@ module.exports = {
     }
   },
   env: { node: true, es6: true },
-  rules: { "react/prop-types": false },
+  rules: { "react/prop-types": 0 },
   overrides: [
     {
       files: ["*.test.js"],
