@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
-import slugify from 'slugify'
 
 import Bio from '../components/Bio'
 import Layout from '../components/layout'
@@ -16,7 +15,6 @@ class BlogIndex extends React.Component {
       'props.data.site.siteMetadata.description'
     )
     const posts = get(this, 'props.data.allMdx.edges')
-    const morePosts = get(this, 'props.data.allContentfulBlogPostMdx.edges')
 
     return (
       <Layout location={this.props.location}>
@@ -26,30 +24,8 @@ class BlogIndex extends React.Component {
           title={siteTitle}
         />
         <Bio />
-        {morePosts.map(({ node }) => {
-          const title = get(node, 'meta.title')
-          return (
-            <div key={node.id}>
-              <h3
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
-              >
-                <Link
-                  style={{ boxShadow: 'none' }}
-                  to={`/contentful/${slugify(node.meta.title, {
-                    lower: true,
-                  })}`}
-                >
-                  {title}
-                </Link>
-              </h3>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
-          )
-        })}
         {posts.map(({ node }) => {
-          const title = get(node, 'frontmatter.title') || node.fields.slug
+          const title = get(node, 'fields.title') || node.fields.slug
           return (
             <div key={node.fields.slug}>
               <h3
@@ -61,7 +37,7 @@ class BlogIndex extends React.Component {
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small>{node.fields.date}</small>
               <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
             </div>
           )
@@ -81,25 +57,12 @@ export const pageQuery = graphql`
         description
       }
     }
-    allContentfulBlogPostMdx {
-      edges {
-        node {
-          excerpt
-          meta {
-            title
-          }
-        }
-      }
-    }
-
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: { fields: [fields___date], order: DESC }) {
       edges {
         node {
           excerpt
           fields {
             slug
-          }
-          frontmatter {
             date(formatString: "DD MMMM, YYYY")
             title
           }

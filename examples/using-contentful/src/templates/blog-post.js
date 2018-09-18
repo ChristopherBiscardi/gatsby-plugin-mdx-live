@@ -20,9 +20,9 @@ class BlogPostTemplate extends React.Component {
         <Helmet
           htmlAttributes={{ lang: 'en' }}
           meta={[{ name: 'description', content: siteDescription }]}
-          title={`${post.frontmatter.title} | ${siteTitle}`}
+          title={`${post.fields.title} | ${siteTitle}`}
         />
-        <h1>{post.frontmatter.title}</h1>
+        <h1>{post.fields.title}</h1>
         <p
           style={{
             ...scale(-1 / 5),
@@ -31,7 +31,7 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(-1),
           }}
         >
-          {post.frontmatter.date}
+          {post.fields.date}
         </p>
         <div>
           <MDXRenderer scope={this.props.__mdxScope}>
@@ -56,7 +56,7 @@ class BlogPostTemplate extends React.Component {
           {previous && (
             <li>
               <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
+                ← {previous.fields.title}
               </Link>
             </li>
           )}
@@ -64,7 +64,7 @@ class BlogPostTemplate extends React.Component {
           {next && (
             <li>
               <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
+                {next.fields.title} →
               </Link>
             </li>
           )}
@@ -90,7 +90,7 @@ export const pageQuery = graphql`
       code {
         body
       }
-      frontmatter {
+      fields {
         title
         date(formatString: "MMMM DD, YYYY")
       }

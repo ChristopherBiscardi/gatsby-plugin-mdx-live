@@ -14,21 +14,8 @@ exports.createPages = ({ graphql, actions }) => {
       graphql(
         `
           {
-            allContentfulBlogPostMdx {
-              edges {
-                node {
-                  id
-                  code {
-                    scope
-                  }
-                  meta {
-                    title
-                  }
-                }
-              }
-            }
             allMdx(
-              sort: { fields: [frontmatter___date], order: DESC }
+              sort: { fields: [fields___date], order: DESC }
               limit: 1000
             ) {
               edges {
@@ -38,9 +25,6 @@ exports.createPages = ({ graphql, actions }) => {
                   }
                   fields {
                     slug
-                  }
-                  frontmatter {
-                    title
                   }
                 }
               }
@@ -75,18 +59,6 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
-
-        result.data.allContentfulBlogPostMdx.edges.forEach(({ node }) => {
-          createPage({
-            path: `/contentful/${slugify(node.meta.title, { lower: true })}`,
-            component: componentWithMDXScope(
-              path.resolve('./src/templates/contentful-post.js'),
-              node.code.scope,
-              __dirname
-            ),
-            context: { id: node.id },
-          })
-        })
       })
     )
   })
@@ -96,12 +68,39 @@ exports.onCreateNode = async ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Mdx`) {
-    const value = createFilePath({ node, getNode })
+    const parent = getNode(node.parent)
+
+    let slug, title, date
+    if (parent.internal.type === 'File') {
+      // from file node
+      slug = createFilePath({ node, getNode })
+      title = node.frontmatter.title
+      date = node.frontmatter.date
+    } else {
+      // from contentful node
+      const contentfulNode = getNode(parent.parent)
+
+      slug = `/contentful/${slugify(contentfulNode.title, { lower: true })}`
+      title = contentfulNode.title
+      date = contentfulNode.createdAt
+    }
 
     createNodeField({
-      name: `slug`,
       node,
-      value,
+      name: `slug`,
+      value: slug,
+    })
+
+    createNodeField({
+      node,
+      name: `title`,
+      value: title,
+    })
+
+    createNodeField({
+      node,
+      name: `date`,
+      value: date,
     })
   }
 }
