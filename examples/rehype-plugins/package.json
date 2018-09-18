@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Chris Biscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "dependencies": {
-    "gatsby": "2.0.0",
+    "gatsby": "2.0.1",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "react-helmet": "^5.2.0"
   },

@@ -9,14 +9,14 @@
     "@mdx-js/mdx": "^0.15.0-2",
     "emotion": "^9.1.3",
     "emotion-server": "^9.1.3",
-    "gatsby": "2.0.0",
+    "gatsby": "2.0.1",
     "gatsby-mdx": "*",
     "gatsby-plugin-emotion": "2.0.5",
     "gatsby-plugin-google-analytics": "2.0.5",
     "gatsby-plugin-offline": "2.0.5",
     "gatsby-plugin-react-helmet": "3.0.0",
     "gatsby-source-filesystem": "2.0.1",
-    "gatsby-transformer-remark": "2.1.1",
+    "gatsby-transformer-remark": "2.1.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-emotion": "^9.1.3",
@@ -30,6 +30,6 @@
     "build": "gatsby build"
   },
   "devDependencies": {
-    "styled-components": "^3.4.5"
+    "styled-components": "^3.4.9"
   }
 }

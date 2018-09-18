@@ -9,7 +9,7 @@
     "@mdx-js/mdx": "^0.15.0-2",
     "emotion": "^9.1.3",
     "emotion-server": "^9.1.3",
-    "gatsby": "2.0.0",
+    "gatsby": "2.0.1",
     "gatsby-mdx": "*",
     "gatsby-plugin-emotion": "2.0.5",
     "gatsby-plugin-react-helmet": "3.0.0",
