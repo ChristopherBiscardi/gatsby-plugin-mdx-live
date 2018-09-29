@@ -6072,6 +6072,30 @@ gatsby-link@^2.0.0-rc.4:
     prop-types "^15.6.1"
     ric "^1.3.0"
 
+gatsby-mdx@*:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/gatsby-mdx/-/gatsby-mdx-0.1.4.tgz#7155669e6539c319a989996403051b4df4c59b20"
+  dependencies:
+    "@babel/plugin-proposal-object-rest-spread" "^7.0.0-beta.54"
+    babel-plugin-pluck-exports "0.0.1"
+    babel-plugin-pluck-imports "0.0.1"
+    debug "^3.1.0"
+    escape-string-regexp "^1.0.5"
+    fs-extra "^7.0.0"
+    gray-matter "^4.0.1"
+    htmltojsx "^0.3.0"
+    json5 "^1.0.1"
+    lodash "^4.17.10"
+    mdast-util-to-string "^1.0.4"
+    mdast-util-toc "^2.0.1"
+    remark "^9.0.0"
+    retext "^5.0.0"
+    strip-markdown "^3.0.1"
+    underscore.string "^3.3.4"
+    unist-util-map "^1.0.4"
+    unist-util-remove "^1.0.1"
+    unist-util-visit "^1.4.0"
+
 gatsby-plugin-emotion@2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-emotion/-/gatsby-plugin-emotion-2.0.5.tgz#e44d0ee58fc07bb49889a28ca51e0cb4690aeeb4"
