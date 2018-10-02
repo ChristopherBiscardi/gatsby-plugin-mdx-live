@@ -7,10 +7,10 @@ const mdx = require("../utils/mdx");
 
 module.exports = async ({ page, actions }, pluginOptions) => {
   const { createPage, deletePage } = actions;
-  const { extensions, ...options } = defaultOptions(pluginOptions);
+  const { extensions, createPages, ...options } = defaultOptions(pluginOptions);
   const ext = path.extname(page.component);
 
-  if (extensions.includes(ext)) {
+  if (createPages && extensions.includes(ext)) {
     const content = await fs.readFile(page.component, "utf8");
     const code = await mdx(content, options);
 

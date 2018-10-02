@@ -14,7 +14,8 @@ module.exports = pluginOptions => {
       hastPlugins: [],
       mdPlugins: [],
       root: process.cwd(),
-      gatsbyRemarkPlugins: []
+      gatsbyRemarkPlugins: [],
+      createPages: true
     },
     pluginOptions
   );
