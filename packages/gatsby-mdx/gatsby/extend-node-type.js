@@ -209,6 +209,25 @@ export default { ${scopeIdentifiers.join(", ")} }`;
           return headings;
         }
       },
+      html: {
+        type: GraphQLString,
+        async resolve(mdxNode) {
+          if (mdxNode.html) {
+            return Promise.resolve(mdxNode.html);
+          }
+          const ast = await getAST(mdxNode);
+
+          const textLikeNodes = [];
+          visit(ast, node => {
+            if (node.type === "text" || node.type === "inlineCode") {
+              textLikeNodes.push(node.value);
+            }
+            return;
+          });
+
+          return textLikeNodes.join(" ");
+        }
+      },
       tableOfContents: {
         type: GraphQLJSON,
         args: {
