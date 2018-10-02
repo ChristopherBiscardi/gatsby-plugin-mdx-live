@@ -22,6 +22,7 @@ const path = require("path");
 const { MDX_SCOPES_LOCATION } = require("../constants");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
+const renderHTML = require("../utils/render-html");
 const getTableOfContents = require("../utils/get-table-of-content");
 const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");
@@ -215,17 +216,9 @@ export default { ${scopeIdentifiers.join(", ")} }`;
           if (mdxNode.html) {
             return Promise.resolve(mdxNode.html);
           }
-          const ast = await getAST(mdxNode);
 
-          const textLikeNodes = [];
-          visit(ast, node => {
-            if (node.type === "text" || node.type === "inlineCode") {
-              textLikeNodes.push(node.value);
-            }
-            return;
-          });
-
-          return textLikeNodes.join(" ");
+          const { body } = await processMDX({ node: mdxNode });
+          return renderHTML(body);
         }
       },
       tableOfContents: {
