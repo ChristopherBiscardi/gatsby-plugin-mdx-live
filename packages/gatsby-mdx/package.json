@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-typescript": "^7.1.0",
     "babel-plugin-gather-exports": "0.0.1",
     "babel-plugin-pluck-exports": "0.0.1",
     "babel-plugin-pluck-imports": "0.0.1",

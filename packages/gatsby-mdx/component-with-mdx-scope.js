@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const path = require("path");
 const babel = require("@babel/core");
 const syntaxObjRestSpread = require("@babel/plugin-syntax-object-rest-spread");
+const typescriptPlugin = require("@babel/plugin-transform-typescript");
 const debug = require("debug")("gatsby-mdx:component-with-mdx-scope");
 const slash = require("slash");
 
@@ -23,7 +24,7 @@ module.exports = function componentWithMDXScope(
   const OGWrapper = fs.readFileSync(absWrapperPath, "utf-8");
   const instance = new BabelPluginPluckExports();
   babel.transform(OGWrapper, {
-    plugins: [instance.plugin, syntaxObjRestSpread],
+    plugins: [instance.plugin, syntaxObjRestSpread, [typescriptPlugin, { isTSX: true }]],
     presets: [require("@babel/preset-react")]
   }).code;
 
