@@ -104,7 +104,7 @@ module.exports = {
         customType: node =>
           node.relativePath.indexOf(`articles`) === 0
             ? `Article`
-            : node.relativePath.split(`/`)[0]
+            : node.relativeDirectory
       }
     }
   ]
