@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const mdx = require("../utils/mdx");
 const extractExports = require("../utils/extract-exports");
 
-module.exports = async ({ id, node, content }) => {
+module.exports = async ({ id, node, content, type }) => {
   const code = await mdx(content);
 
   // extract all the exports
@@ -14,7 +14,7 @@ module.exports = async ({ id, node, content }) => {
     parent: node.id,
     internal: {
       content: content,
-      type: "Mdx"
+      type: `${type}Mdx`
     }
   };
 

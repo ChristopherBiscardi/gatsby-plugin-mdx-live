@@ -23,7 +23,8 @@ module.exports = async (
   const mdxNode = await createMDXNode({
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
-    content
+    content,
+    type: options.customType(node)
   });
 
   createNode(mdxNode);

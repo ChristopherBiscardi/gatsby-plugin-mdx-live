@@ -85,3 +85,30 @@ module.exports = {
   ]
 };
 ```
+
+### Custom Types
+
+By default `gatsby-mdx` defines all mdx nodes as `Mdx` type.
+Using the option `customType` you can define a function to specify your own types.
+The function will receive the node so you can pull any value to determine various groups of nodes and give them a customized type.
+Your function should return a string, if you don't want to override all node types you can return an empty string.
+Note that `gatsby-mdx` will suffix all types with `Mdx` to make discoverability easier for internal use.
+Using the following `gatsby-config.js`
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-mdx`,
+      options: {
+        customType: node =>
+          node.relativePath.indexOf(`articles`) === 0
+            ? `Article`
+            : node.relativePath.split(`/`)[0]
+      }
+    }
+  ]
+};
+```
+
+You'll be able to query all nodes within the articles directory as `articleMdX`/`allArticleMdx`, all other nodes will get their type based on the containing directory.
