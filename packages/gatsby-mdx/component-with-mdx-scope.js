@@ -19,12 +19,18 @@ module.exports = function componentWithMDXScope(
   if (typeof codeScopeAbsPaths === "string") {
     codeScopeAbsPaths = [codeScopeAbsPaths];
   }
+  const isTS = absWrapperPath.endsWith('.ts');
+  const isTSX = absWrapperPath.endsWith('.tsx');
 
   // hoist pageQuery and any other named exports
   const OGWrapper = fs.readFileSync(absWrapperPath, "utf-8");
   const instance = new BabelPluginPluckExports();
+  const plugins = [instance.plugin, syntaxObjRestSpread];
+  if (isTS || isTSX) {
+    plugins.push([typescriptPlugin, { isTSX }]);
+  }
   babel.transform(OGWrapper, {
-    plugins: [instance.plugin, syntaxObjRestSpread, [typescriptPlugin, { isTSX: true }]],
+    plugins,
     presets: [require("@babel/preset-react")]
   }).code;
 
