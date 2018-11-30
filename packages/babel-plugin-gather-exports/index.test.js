@@ -1,9 +1,7 @@
 const Plugin = require(".");
 
 const babel = require("@babel/core");
-
-const testContents = `
-export { value } from './index';
+const testContents = `export { value } from './index';
 export const hello = 'world';
 export const another = {
   exported: "variable"

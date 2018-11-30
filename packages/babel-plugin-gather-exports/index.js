@@ -15,6 +15,7 @@ module.exports = class Plugin {
             const declaration = path.node.declaration;
 
             if (
+              declaration &&
               declaration.type === "VariableDeclaration" &&
               declaration.kind === "const"
             ) {
