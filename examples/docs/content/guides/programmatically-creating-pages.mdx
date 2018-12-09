@@ -106,7 +106,7 @@ export const pageQuery = graphql`
 `;
 ```
 
-You can also provide global scope components to your templates
+You can also provide your own scope when rendering using `MDXRenderer`. By default this will override the automatically generated scope, so to add additional imports to the scope use the context tools.
 
 ```mdx
 # My Video
