@@ -80,3 +80,68 @@ exports.createPages = ({ graphql, actions }) => {
   });
 };
 ```
+
+```javascript
+// posts-page-layout.js
+import React from "react";
+import { graphql } from "gatsby";
+import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import { withMDXScope } from "gatsby-mdx/context";
+
+function PostPageTemplate({ data: { mdx } }) {
+  return <MDXRenderer>{mdx.code.body}</MDXRenderer>;
+}
+
+export default PostPageTemplate;
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    mdx(id: { eq: $id }) {
+      id
+      code {
+        body
+      }
+    }
+  }
+`;
+```
+
+You can also provide global scope components to your templates
+
+```mdx
+# My Video
+
+Check out my awesome video:
+
+<YouTube v="UgDDHi-_fyY" />
+```
+
+Using the `withMDXScope` HOC
+
+```javascript
+// posts-page-layout.js
+import React from "react";
+import { graphql } from "gatsby";
+import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import { withMDXScope } from "gatsby-mdx/context";
+import YouTube from "react-youtube";
+
+function PostPageTemplate({ data: { mdx }, scope }) {
+  return (
+    <MDXRenderer scope={{ YouTube, ...scope }}>{mdx.code.body}</MDXRenderer>
+  );
+}
+
+export default withMDXScope(PostPageTemplate);
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    mdx(id: { eq: $id }) {
+      id
+      code {
+        body
+      }
+    }
+  }
+`;
+```
