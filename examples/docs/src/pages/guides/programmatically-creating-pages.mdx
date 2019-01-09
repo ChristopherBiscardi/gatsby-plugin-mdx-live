@@ -82,7 +82,7 @@ module.exports = {
 };
 ```
 
-Here you're telling Gatsby "Look in folder called `content/posts` that's located in the root of my project. Make any file inside accessible through a GraphQL query, and add a property called `sourceInstanceName` and set it to `posts`"
+Here you're telling Gatsby "Look in a folder called `content/posts` that's located in the root of my project. Make any file inside accessible through a GraphQL query, add a property called `sourceInstanceName` and set its value to `posts`"
 
 You can read about [gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme) if you'd like to learn more.
 
@@ -141,17 +141,19 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   if (node.internal.type === 'Mdx') {
     const value = createFilePath({ node, getNode });
 
-    createNodField({
-      name: 'slug' /* this is the name of the field you are adding */,
-      node /* this node refers to each mdx file */,
+    createNodeField({
+      name: 'slug' /* 1) this is the name of the field you are adding */,
+      node /* 2) this node refers to each individual mdx file */,
       value: `/blog${value}`,
       /*
-       * 1) this will result in:
+       * 3) this will result in:
        * blog-1.mdx => "localhost:8000/blog/blog-1/"
        * blog-2.mdx => "localhost:8000/blog/blog-2/"
        *
-       * 2) it also takes care of something like content/posts/example/index.mdx
+       * 4) it also takes care of something like content/posts/example/index.mdx
        * example/index.mdx => "localhost:8000/blog/example/"
+       * this comes in handy when you have components or assets that you want to
+       * collocate with your mdx files
        *
        */
     });
@@ -174,9 +176,7 @@ In the root of your Gatsby project run:
 gatsby develop
 ```
 
-In your browser open up <a href='https://localhost:8000/___graphql' target='_blank'>https://localhost:8000/\_\_\_graphql</a>
-
-Paste the following into GraphiQL and see what it returns:
+Then, in your browser open up <a href='https://localhost:8000/___graphql' target='_blank'>https://localhost:8000/\_\_\_graphql</a> and paste the following into GraphiQL:
 
 ```graphql
 query {
@@ -194,7 +194,7 @@ query {
 }
 ```
 
-This is the basic query you need, but you can edit and add to this to fit your needs.
+This is the basic query you need to create your mdx pages, but you can edit and add to this to fit your needs.
 
 <br />
 <hr />
@@ -206,10 +206,10 @@ This is the basic query you need, but you can edit and add to this to fit your n
 const path = require('path');
 
 exports.createPages = ({ graphql, actions }) => {
-  /* 1) Pull the createPage function off of actions */
+  /* 1) Destructure the createPage function from the actions object */
   const { createPage } = actions;
 
-  /* 2) The following is the Graphql query you just constructed */
+  /* 2) The following is the Graphql query you just constructed wrapped in a Promise */
   return new Promise((resolve, reject) => {
     resolve(
       graphql(
@@ -278,6 +278,7 @@ function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
+      {/* 1) You always need to wrap your mdx.code.body in MDXRenderer */}
       <MDXRenderer>{mdx.code.body}</MDXRenderer>
     </div>
   );
@@ -285,12 +286,12 @@ function PageTemplate({ data: { mdx } }) {
 
 /*
  *
- * 1) `id` is passed in through context but to access it you need to declare it's type
+ * 2) `id` is passed in through context but to access it you need to declare its type
  * at the top of your query.
  *
- * 2) Normally it's a good idea to give a name to your queries
+ * 3) Normally it's a good idea to give a name to your queries
  * but because of the way gatsby-mdx inserts the queries,
- * you'll get an error if name a query for a programattically created page.
+ * you'll get an error if you name a query for a programattically created page.
  *
  */
 export const pageQuery = graphql`
