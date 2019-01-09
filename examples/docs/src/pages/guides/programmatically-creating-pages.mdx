@@ -1,143 +1,292 @@
 ---
-title: "Programmatically Creating Pages"
+title: 'Programmatically Creating Pages'
 ---
 
-Pages can be created programmatically by combining a source plugin in
-`gatsby-config.js` with some `createPage` calls in
-`gatsby-node.js`. For example, using `gatsby-source-filesystem` we can
-point to a folder of MDX files and name the collection `"posts"`.
+# Programmatically Creating Pages
+
+Adding `gatsby-mdx` to your Gatsby website is extremely fast and easy, but sometimes you want to be able to programmatically create pages that live outside of `src/pages/`.
+
+For instance, let's say you have a Gatsby website, and you want to add support for MDX so you can start that blog you've been putting off forever. The posts will live in `content/posts/`.
+
+You can do this with the help of `gatsby-source-filesystem`, and some calls to `createPages` in `gatsby-node.js`. Let's dive in.
+
+<h3>Sections</h3>
+
+<ul>
+  <li>
+    <a href='#install-dependencies'>Install Dependencies</a>
+  </li>
+  <li>
+    <a href='#edit-your-gatsby-config'>Edit Your gatsby-config.js</a>
+  </li>
+  <li>
+    <a href='#add-mdx-files'>Add MDX Files</a>
+  </li>
+  <li>
+    <a href='#generate-slugs'>Generate Slugs</a>
+  </li>
+  <li>
+    <a href='#query-for-mdx-files'>Query For MDX Files</a>
+  </li>
+  <li>
+    <a href='#create-pages'>Create Pages From Your Query</a>
+  </li>
+  <li>
+    <a href='#make-a-template'>Make A Template For Your Blog Posts</a>
+  </li>
+  <li>
+    <a href='#bonus'>Bonus: Make a Blog Index</a>
+  </li>
+</ul>
+<br />
+
+---
+
+<h2 id='install-dependencies'>Install Dependencies</h2>
+
+You need to install a few things to get started including `gatsby-mdx`, `@mdx-js/tag`, `@mdx-js/mdx`, and `gatsby-source-filesystem`.
+
+From the root of your Gatsby project run:
+
+```sh
+npm install gatsby-mdx @mdx-js/tag @mdx-js/mdx gatsby-source-filesystem
+```
+
+<br />
+<hr />
+
+<h2 id='edit-your-gatsby-config'>Edit Your `gatsby-config.js`</h2>
+
+To let Gatsby know that you'll be working with `MDX` files you need to add `gatsby-mdx` to the plugins array in your `gatsby-config.js` file.
 
 ```javascript
-// gatsby-config.js
+/* gatsby-config.js */
 
 module.exports = {
   plugins: [
-    `gatsby-mdx`,
+    /* 1) this adds support for *.mdx files in gatsby */
+    'gatsby-mdx',
+
+    /*
+     * 2) this adds a collection called "posts"
+     * that looks for files in `content/posts/`
+     */
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: "posts",
-        path: `${__dirname}/content/`
-      }
-    }
-  ]
+        name: 'posts',
+        path: `${__dirname}/content/posts/`,
+      },
+    },
+  ],
 };
 ```
 
-Then, we can [query the GraphQL
-schema](/docs/guides/querying-mdx-content-via-graphql) for our MDX
-content and create pages from it. Creating pages from MDX content
-requires us to manipulate the scope of the MDX file.
+Here you're telling Gatsby "Look in folder called `content/posts` that's located in the root of my project. Make any file inside accessible through a GraphQL query, and add a property called `sourceInstanceName` and set it to `posts`"
+
+You can read more about [gatsby-source-filesystem](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme) if you'd like to learn more.
+
+<br />
+<hr />
+
+<h2 id='add-mdx-files'>Add MDX Files</h2>
+
+Before you can write any GraphQL queries, and programmatically create pages, you need to add some content.
+
+In your terminal run the following commands:
+
+```sh
+mkdir -p content/posts
+```
+
+```sh
+touch content/posts/blog-{1,2}.mdx
+```
+
+Open up each of the files you just created and add some content.
+
+```md
+---
+title: 'Blog Post 1'
+---
+
+Trying out MDX
+```
+
+<br />
+
+```md
+---
+title: 'Blog Post 2'
+---
+
+Gatsby is the best
+```
+
+<br />
+<hr />
+
+<h2 id='generate-slugs'>Generate Slugs</h2>
+
+Because you're programmatically creating pages, you need to construct the URL yourself.
 
 ```javascript
-// gatsby-node.js
-const componentWithMDXScope = require("gatsby-mdx/component-with-mdx-scope");
+// in gatsby-node.js
+
+const { createFilePath } = require('gatsby-source-filesystem');
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions;
+
+  if (node.internal.type === 'Mdx') {
+    const value = createFilePath({ node, getNode });
+
+    createNodField({
+      name: 'slug' /* this is the name of the field you are adding */,
+      node /* this node refers to each mdx file */,
+      value: `/blog${value}`,
+      /*
+       * 1) this will result in:
+       * blog-1.mdx => "localhost:8000/blog/blog-1/"
+       * blog-2.mdx => "localhost:8000/blog/blog-2/"
+       *
+       * 2) it also takes care of something like content/posts/example/index.mdx
+       * example/index.mdx => "localhost:8000/blog/example/"
+       *
+       */
+    });
+  }
+};
+```
+
+Here is a link to the Gatsby docs for [onCreateNode](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode), as well as [createFilePath](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath) from `gatsby-source-filesystem`.
+
+<br />
+<hr />
+
+<h2 id='query-for-mdx-files'>Query For MDX Files</h2>
+
+Before you can programmatically create pages from your `*.mdx` files, you need to put together a GraphQL query. Start up Gatsby in development mode, and open up GraphiQL.
+
+In the root of your Gatsby project run:
+
+```sh
+gatsby develop
+```
+
+In your browser open up <a href='https://localhost:8000/___graphql' target='_blank'>https://localhost:8000/\_\_\_graphql</a>
+
+Paste the following into GraphiQL and see what it returns:
+
+```graphql
+query {
+  allMdx {
+    edges {
+      node {
+        id
+        fields {
+          # this is slug field you created in the last section
+          slug
+        }
+      }
+    }
+  }
+}
+```
+
+This is the basic query you need, but you can edit and add to this to fit your needs.
+
+<br />
+<hr />
+
+<h2 id="create-pages">Create Pages From Your Query</h2>
+
+```javascript
+// in gatsby-node.js
+const path = require('path');
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
+
   return new Promise((resolve, reject) => {
     resolve(
       graphql(
         `
-          {
+          query {
             allMdx {
               edges {
                 node {
                   id
-                  parent {
-                    ... on File {
-                      name
-                      sourceInstanceName
-                    }
-                  }
-                  code {
-                    scope
+                  fields {
+                    slug
                   }
                 }
               }
             }
           }
-        `
+        `,
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors);
+          console.error(result.errors);
           reject(result.errors);
         }
 
-        // Create blog posts pages.
         result.data.allMdx.edges.forEach(({ node }) => {
           createPage({
-            path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
-            component: componentWithMDXScope(
-              path.resolve("./src/components/posts-page-layout.js"),
-              node.code.scope
-            ),
-            context: { id: node.id }
+            path: node.fields.slug,
+            component: path.resolve(`./src/components/posts-page-layout.js`),
+            context: { id: node.id },
+            /*
+             * 1) You pass the id through context
+             * so you can access it as a GraphQL variable
+             */
           });
         });
-      })
+      }),
     );
   });
 };
 ```
 
-```javascript
-// posts-page-layout.js
-import React from "react";
-import { graphql } from "gatsby";
-import MDXRenderer from "gatsby-mdx/mdx-renderer";
-import { withMDXScope } from "gatsby-mdx/context";
+<br />
+<hr />
 
-function PostPageTemplate({ data: { mdx } }) {
-  return <MDXRenderer>{mdx.code.body}</MDXRenderer>;
-}
+<h2 id="make-a-template">Make A Template For Your Blog Posts</h2>
 
-export default PostPageTemplate;
+If you tried to look at your Gatsby website as it was right now, it wouldn't look like anything changed. Make a file called `posts-page-layout.js` in `src/components`
 
-export const pageQuery = graphql`
-  query($id: String!) {
-    mdx(id: { eq: $id }) {
-      id
-      code {
-        body
-      }
-    }
-  }
-`;
-```
+```jsx
+// src/components/posts-page-layout.js
+import React from 'react';
+import { graphql } from 'gatsby';
+import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
-You can also provide your own scope when rendering using `MDXRenderer`. By default this will override the automatically generated scope, so to add additional imports to the scope use the context tools.
-
-```mdx
-# My Video
-
-Check out my awesome video:
-
-<YouTube v="UgDDHi-_fyY" />
-```
-
-Using the `withMDXScope` HOC
-
-```javascript
-// posts-page-layout.js
-import React from "react";
-import { graphql } from "gatsby";
-import MDXRenderer from "gatsby-mdx/mdx-renderer";
-import { withMDXScope } from "gatsby-mdx/context";
-import YouTube from "react-youtube";
-
-function PostPageTemplate({ data: { mdx }, scope }) {
+function PageTemplate({ data: { mdx } }) {
   return (
-    <MDXRenderer scope={{ YouTube, ...scope }}>{mdx.code.body}</MDXRenderer>
+    <div>
+      <h1>{mdx.frontmatter.title}</h1>
+      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+    </div>
   );
 }
 
-export default withMDXScope(PostPageTemplate);
-
+/*
+ *
+ * 1) We can access id through context by declaring it as
+ * a variable at the top of our query.
+ *
+ * 2) Normally it's a good idea to give a name to our queries
+ * but because of the way gatsby-mdx inserts the queries,
+ * you'll get an error if you give it a name.
+ *
+ */
 export const pageQuery = graphql`
-  query($id: String!) {
-    mdx(id: { eq: $id }) {
+  query($id: String) {
+    mdx(id: { id: $id }) {
       id
+      frontmatter {
+        title
+      }
       code {
         body
       }
@@ -145,3 +294,59 @@ export const pageQuery = graphql`
   }
 `;
 ```
+
+<br />
+<hr />
+
+<h2 id="bonus">Bonus: Make a Blog Index</h2>
+
+```jsx
+// src/pages/index.js
+import React from 'react'
+import { Link, graphql } from 'gatsby'
+
+const BlogIndex = ({ data }) => {
+  const { edges: posts } = data.allMdx
+
+  return (
+    <div>
+      <h1>Awesome MDX Blog</h1>
+
+      <ul>
+        {posts.map(({ node: post }) => (
+          <li key={post.id}>
+            <Link to={post.fields.slug}>
+              <h2>{post.frontmatter.title}</h2>
+            </Link>
+            <p>{post.excerpt}</p>
+          </li>
+        ))
+      </ul>
+    </div>
+  )
+}
+
+export const pageQuery = graphql`
+  query blogIndex {
+    allMdx {
+      edges {
+        node {
+          id
+          excerpt
+          frontmatter {
+            title
+          }
+          fields {
+            slug
+          }
+        }
+      }
+    }
+  }
+`
+
+export default BlogIndex
+
+```
+
+Now you have all the pieces you need to programmatically create pages with Gatsby and `gatsby-mdx`.
