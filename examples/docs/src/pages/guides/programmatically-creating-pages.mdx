@@ -296,7 +296,7 @@ function PageTemplate({ data: { mdx } }) {
  */
 export const pageQuery = graphql`
   query BlogPostQuery($id: String) {
-    mdx(id: { id: $id }) {
+    mdx(id: { eq: $id }) {
       id
       frontmatter {
         title
