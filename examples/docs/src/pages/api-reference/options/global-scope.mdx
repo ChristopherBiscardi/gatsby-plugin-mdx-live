@@ -4,4 +4,43 @@ title: globalScope
 
 # Global Scope
 
-Usage
+When importing a react component into your MDX, you can import it using the `import` statement as in JavaScript.
+
+```mdx
+import { SketchPicker } from "react-color";
+
+# Hello, world!
+
+Here's a color picker!
+
+<SketchPicker />
+```
+
+If you want to allow usage of a component from anywhere, add it to the `globalScope` field in the options inside `gatsby-config.js`:
+
+```js
+{
+  resolve: `gatsby-mdx`,
+  options: {
+    globalScope: `
+      import { SketchPicker } from "react-color";
+
+      export default { SketchPicker };
+    `
+  }
+}
+```
+
+All that is needed is to import the components you wish to be globally available and then put them into an exported object.
+
+Then in any MDX file, you can insert the components without the import.
+
+```mdx
+# Hello, world!
+
+Here's a color picker
+
+<SketchPicker />
+```
+
+(_Note:_ globalScope is not working yet in any mdx file in `src/pages`, but there is an issue to resolve this: [ChristopherBiscardi/gatsby-mdx#239](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/239))
