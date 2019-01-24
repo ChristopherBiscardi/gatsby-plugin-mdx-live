@@ -39,3 +39,16 @@ just like a normal React component.
 ```js
 <MDXRenderer title="My Stuff!">{mdx.code.body}</MDXRenderer>
 ```
+
+### Using External Components in MDX
+
+If your .mdx files are importing components that are "outside" your project (such as via a custom webpack alias),
+you'll likely need to provide a scope prop.
+
+`gatsby-mdx` has a loader function that you can use to load the automatically generated scopes from the .cache directory.
+
+```js
+import scopeContexts from "gatsby-mdx/loaders/mdx-scopes!";
+
+<MDXRenderer scope={scopeContexts} title="My Stuff!">{mdx.code.body}</MDXRenderer>
+```
