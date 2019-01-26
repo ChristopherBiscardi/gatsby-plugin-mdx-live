@@ -5,38 +5,61 @@ const extractExports = require("../utils/extract-exports");
 module.exports = async ({ id, node, content }) => {
   const code = await mdx(content);
 
-  // extract all the exports
-  const { frontmatter, ...nodeExports } = extractExports(code);
+  try {
+    // extract all the exports
+    const { frontmatter, ...nodeExports } = extractExports(code);
 
-  const mdxNode = {
-    id,
-    children: [],
-    parent: node.id,
-    internal: {
-      content: content,
-      type: "Mdx"
+    const mdxNode = {
+      id,
+      children: [],
+      parent: node.id,
+      internal: {
+        content: content,
+        type: "Mdx"
+      }
+    };
+
+    mdxNode.frontmatter = {
+      title: ``, // always include a title
+      ...frontmatter,
+      _PARENT: node.id
+    };
+
+    mdxNode.excerpt = frontmatter.excerpt;
+    mdxNode.exports = nodeExports;
+    mdxNode.rawBody = content;
+
+    // Add path to the markdown file path
+    if (node.internal.type === `File`) {
+      mdxNode.fileAbsolutePath = node.absolutePath;
     }
-  };
 
-  mdxNode.frontmatter = {
-    title: ``, // always include a title
-    ...frontmatter,
-    _PARENT: node.id
-  };
-
-  mdxNode.excerpt = frontmatter.excerpt;
-  mdxNode.exports = nodeExports;
-  mdxNode.rawBody = content;
-
-  // Add path to the markdown file path
-  if (node.internal.type === `File`) {
-    mdxNode.fileAbsolutePath = node.absolutePath;
+    mdxNode.internal.contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(mdxNode))
+      .digest(`hex`);
+    return mdxNode;
+  } catch (e) {
+    // An error occurred, send the user a helpful message
+    return {
+      id,
+      children: [],
+      parent: node.id,
+      internal: {
+        content: content,
+        type: "Mdx",
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(e.message))
+          .digest(`hex`)
+      },
+      frontmatter: {
+        title: `ERROR: ${e.message}`,
+        _PARENT: node.id
+      },
+      excerpt: e.message,
+      exports: {},
+      rawBody: content
+    };
   }
-
-  mdxNode.internal.contentDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(mdxNode))
-    .digest(`hex`);
-
-  return mdxNode;
 };
