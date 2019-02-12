@@ -4,7 +4,7 @@ const MemoryFS = require("memory-fs");
 const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 const { cloneDeep } = require("lodash");
 
-module.exports = mdxBody => wConfig => {
+module.exports = (mdxBody, rootWrappers) => wConfig => {
   const webpackConfig = cloneDeep(wConfig);
   // something sets externals, which will cause React to be undefined
   webpackConfig.externals = undefined;
@@ -20,11 +20,13 @@ module.exports = mdxBody => wConfig => {
       locals: {
         // Properties here are merged into `locals`
         // passed to the exported render function
-        mdxBody
+        mdxBody,
+        rootWrappers
       },
       globals: {
         window: {},
-        __MDX_CONTENT__: mdxBody
+        __MDX_CONTENT__: mdxBody,
+        __PLUGIN_URLS__: rootWrappers
       }
     })
   );
