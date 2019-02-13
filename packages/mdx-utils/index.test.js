@@ -40,20 +40,19 @@ const preProps3 = {
       components: {},
       parentName: "pre",
       props: {
-        className: "language-java{3-6}",
+        className: "language-java{3-6}"
       },
       children: "const some = {}\n"
     }
   }
 };
 
-
 describe("preToCodeBlock", () => {
   test("preToCodeBlock works", () => {
     expect(preToCodeBlock(preProps)).toEqual({
       codeString: "const some = {}",
       language: "js",
-      highlight: null,
+      highlight: null
     });
   });
 
@@ -66,12 +65,12 @@ describe("preToCodeBlock", () => {
       "react-live": true
     });
   });
-  
+
   test("preToCodeBlock handles language and highlight string", () => {
-    expect(preToCodeBlock(preProps2)).toEqual({
+    expect(preToCodeBlock(preProps3)).toEqual({
       codeString: "const some = {}",
       language: "java",
-      highlight: "3-6",
+      highlight: "3-6"
     });
   });
 
