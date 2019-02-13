@@ -1,3 +1,5 @@
+const extract = /language-(?<language>[a-zA-Z-]*)[{]?(?<highlight>[0-9-]*)?[}]?/;
+
 exports.preToCodeBlock = preProps => {
   if (
     // children is MDXTag
@@ -9,15 +11,31 @@ exports.preToCodeBlock = preProps => {
   ) {
     // we have a <pre><code> situation
     const {
-      children: codeString,
+      children,
       props: { className, ...props }
     } = preProps.children.props;
-
-    return {
-      codeString: codeString.trim(),
-      language: className && className.split("-")[1],
-      ...props
+    
+    const output = {
+      codeString: children.trim(),
+      language: null,
+      highlight: null,
+      ...props,
     };
+
+    // matches "language-java" & "language-java{3-4}"
+    const match = extract.exec(className);
+    
+    if (!match) {
+      return output; 
+    }
+    
+    const { language, highlight } = match.groups;
+    
+    output.language = language;
+    output.highlight = highlight || null;
+    
+    return output;
   }
+  
   return undefined;
 };
