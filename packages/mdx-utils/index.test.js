@@ -32,11 +32,28 @@ const preProps2 = {
   }
 };
 
+const preProps3 = {
+  children: {
+    $$typeof: Symbol("react.element"),
+    props: {
+      name: "code",
+      components: {},
+      parentName: "pre",
+      props: {
+        className: "language-java{3-6}",
+      },
+      children: "const some = {}\n"
+    }
+  }
+};
+
+
 describe("preToCodeBlock", () => {
   test("preToCodeBlock works", () => {
     expect(preToCodeBlock(preProps)).toEqual({
       codeString: "const some = {}",
-      language: "js"
+      language: "js",
+      highlight: null,
     });
   });
 
@@ -44,8 +61,17 @@ describe("preToCodeBlock", () => {
     expect(preToCodeBlock(preProps2)).toEqual({
       codeString: "<button onClick={alert('clicked')}>Click Me!</button>",
       language: "js",
+      highlight: null,
       metastring: "react-live",
       "react-live": true
+    });
+  });
+  
+  test("preToCodeBlock handles language and highlight string", () => {
+    expect(preToCodeBlock(preProps2)).toEqual({
+      codeString: "const some = {}",
+      language: "java",
+      highlight: "3-6",
     });
   });
 
