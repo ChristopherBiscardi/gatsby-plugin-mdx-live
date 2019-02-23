@@ -185,12 +185,8 @@ module.exports = (
             return Promise.resolve(mdxNode.html);
           }
           const { body } = await processMDX({ node: mdxNode });
-          const { plugins, webpack } = store.getState();
-          const rootWrappers = plugins
-            .filter(plugin => plugin.ssrAPIs.includes("wrapRootElement"))
-            .map(plugin => `${plugin.resolve}/gatsby-ssr`);
-          const withMDX = renderHTML(body, rootWrappers);
-          return withMDX(webpack);
+          const withMDX = renderHTML(body);
+          return withMDX(store.getState().webpack);
         }
       },
       tableOfContents: {
