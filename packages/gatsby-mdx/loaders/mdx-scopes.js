@@ -4,7 +4,7 @@ const slash = require("slash");
 const loaderUtils = require("loader-utils");
 const { MDX_SCOPES_LOCATION } = require("../constants");
 
-module.exports = () => {
+module.exports = function() {
   const { cache } = loaderUtils.getOptions(this);
   const abs = path.join(cache.directory, MDX_SCOPES_LOCATION);
   const files = fs.readdirSync(abs);
