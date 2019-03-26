@@ -25,8 +25,8 @@ const slash = require("slash");
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
-  mdPlugins: [],
-  hastPlugins: [],
+  remarkPlugins: [],
+  rehypePlugins: [],
   compilers: [],
   blocks: [BLOCKS_REGEX]
 };
@@ -147,20 +147,24 @@ ${contentWithoutFrontmatter}`;
       return rawGetNode(id);
     }
   };
-  const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins({
-    gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-    mdxNode,
-    getNode,
-    getNodes,
-    reporter,
-    cache,
-    pathPrefix
-  });
+  const gatsbyRemarkPluginsAsRemarkPlugins = await getSourcePluginsAsRemarkPlugins(
+    {
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode,
+      getNode,
+      getNodes,
+      reporter,
+      cache,
+      pathPrefix
+    }
+  );
 
   code = await mdx(code, {
     ...options,
-    mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins),
-    hastPlugins: options.hastPlugins
+    remarkPlugins: options.remarkPlugins.concat(
+      gatsbyRemarkPluginsAsRemarkPlugins
+    ),
+    rehypePlugins: options.rehypePlugins
   });
 
   code = `

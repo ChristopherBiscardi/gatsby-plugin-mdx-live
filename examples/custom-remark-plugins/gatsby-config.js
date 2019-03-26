@@ -20,7 +20,7 @@ module.exports = {
         defaultLayout: require.resolve(
           "./src/components/default-page-layout.js"
         ),
-        mdPlugins: [require("remark-toc")],
+        remarkPlugins: [require("remark-toc")],
         gatsbyRemarkPlugins: [
           { resolve: `gatsby-remark-katex` },
           {
