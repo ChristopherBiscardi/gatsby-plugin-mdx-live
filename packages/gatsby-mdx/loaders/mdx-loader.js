@@ -159,12 +159,19 @@ ${contentWithoutFrontmatter}`;
     }
   );
 
+  const remarkPlugins = options.mdPlugins || options.remarkPlugins;
+  const rehypePlugins = options.hastPlugins || options.rehypePlugins;
+  const remarkPluginsKey = options.mdPlugins ? "mdPlugins" : "remarkPlugins";
+  const rehypePluginsKey = options.hastPlugins
+    ? "hastPlugins"
+    : "rehypePlugins";
+
   code = await mdx(code, {
     ...options,
-    remarkPlugins: options.remarkPlugins.concat(
+    [remarkPluginsKey]: remarkPlugins.concat(
       gatsbyRemarkPluginsAsRemarkPlugins
     ),
-    rehypePlugins: options.rehypePlugins
+    [rehypePluginsKey]: rehypePlugins
   });
 
   code = `
