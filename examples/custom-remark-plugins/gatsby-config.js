@@ -22,7 +22,7 @@ module.exports = {
         ),
         mdPlugins: [require("remark-toc")],
         gatsbyRemarkPlugins: [
-          { resolve: `gatsby-remark-katex` },
+          "gatsby-remark-katex",
           {
             resolve: "gatsby-remark-images",
             options: {
@@ -30,8 +30,8 @@ module.exports = {
               sizeByPixelDensity: true
             }
           },
-          { resolve: "gatsby-remark-autolink-headers" },
-          { resolve: "gatsby-remark-prismjs", options: {} }
+          "gatsby-remark-autolink-headers",
+          "gatsby-remark-prismjs"
         ]
       }
     },
