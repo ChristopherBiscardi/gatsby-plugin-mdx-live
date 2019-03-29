@@ -32,7 +32,7 @@ class App extends Component {
         {
           react: "latest",
           "react-dom": "latest",
-          "@mdx-js/tag": "latest"
+          "@mdx-js/react": "latest"
         },
         dynamicDeps
       )
@@ -45,7 +45,7 @@ class App extends Component {
         "/main.js": {
           code: `
           import React from 'react';
-          import { MDXTag } from '@mdx-js/tag';
+          import { MDXTag } from '@mdx-js/react';
 
           ${this.getJSXStringFromMDX(mdxContent)}
           `
@@ -79,7 +79,7 @@ class App extends Component {
         "/main.js": {
           code: `
         import React from 'react';
-        import { MDXTag } from '@mdx-js/tag';
+        import { MDXTag } from '@mdx-js/react';
 
         ${this.getJSXStringFromMDX(mdxContent)}
         `

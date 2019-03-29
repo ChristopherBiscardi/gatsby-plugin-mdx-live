@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { graphql } from "gatsby";
 
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
-import { MDXProvider } from "@mdx-js/tag";
+import { MDXProvider } from "@mdx-js/react";
 
 export default class MDXRuntimeTest extends Component {
   render() {

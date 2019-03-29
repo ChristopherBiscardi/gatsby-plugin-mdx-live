@@ -2,7 +2,7 @@ import React from "react";
 import { Global, css } from "@emotion/core";
 import { ThemeProvider } from "emotion-theming";
 import mdxComponents from "./src/components/mdxComponents";
-import { MDXProvider } from "@mdx-js/tag";
+import { MDXProvider } from "@mdx-js/react";
 import { color } from "./src/components/color";
 
 export const universalWrapRootElement = ({ element }) => (

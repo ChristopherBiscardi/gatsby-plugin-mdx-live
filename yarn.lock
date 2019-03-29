@@ -1733,10 +1733,10 @@
     refractor "^2.3.0"
     unist-util-visit "^1.1.3"
 
-"@mdx-js/mdx@1.0.0-alpha.10", "@mdx-js/mdx@^1.0.0-alpha.0", "@mdx-js/mdx@^1.0.0-alpha.10":
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.0.0-alpha.10.tgz#af21528670a3170bc0ed2f540370b09e5baab207"
-  integrity sha512-HKzwpkRaR27kUAvNXvV0RUQx7mn51qjKhEPGLNUFpR6nFMg6obb7yoQOOczU9HBY3xLVtXb+2ZIi6SAC1ODDAQ==
+"@mdx-js/mdx@1.0.0-alpha.13", "@mdx-js/mdx@^1.0.0-alpha.13":
+  version "1.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.0.0-alpha.13.tgz#d7d5266ca522e7ec8da6608e5500e7f58f77334e"
+  integrity sha512-l/NJibkoa7ZGL8OjqjVI47UcFXkesF4Mz3eew8koEkZTJqMWVBR4TenMa677PKHXOq5k4kmhyXMn/3YG4WioVw==
   dependencies:
     "@babel/plugin-proposal-object-rest-spread" "^7.3.2"
     "@babel/plugin-syntax-jsx" "^7.2.0"
@@ -1744,7 +1744,7 @@
     detab "^2.0.0"
     hast-util-raw "^5.0.0"
     mdast-util-to-hast "^4.0.0"
-    remark-mdx "^1.0.0-alpha.10"
+    remark-mdx "^1.0.0-alpha.13"
     remark-parse "^6.0.0"
     remark-squeeze-paragraphs "^3.0.1"
     to-style "^1.3.3"
@@ -1752,10 +1752,10 @@
     unist-builder "^1.0.1"
     unist-util-visit "^1.3.0"
 
-"@mdx-js/tag@1.0.0-alpha.0", "@mdx-js/tag@1.0.0-alpha.6", "@mdx-js/tag@^1.0.0-alpha.0", "@mdx-js/tag@^1.0.0-alpha.6":
-  version "1.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@mdx-js/tag/-/tag-1.0.0-alpha.6.tgz#2ae87d75c1f2cf6d4a79d863bfd1ce441dd34fd5"
-  integrity sha512-jXA1KyBpGkec+imeRuAaLq4EOoJeGApZ3up1YiMWP+axKSVW8O0moz8Ti1gkr0fzntJi5dVosQeMEUe9b1jsxQ==
+"@mdx-js/react@1.0.0-alpha.13", "@mdx-js/react@^1.0.0-alpha.13":
+  version "1.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.0.0-alpha.13.tgz#1058765cb8d59bfec2ce7221e311bb0d07aee486"
+  integrity sha512-CxylbBUs8C74AgSGX7UfTHPNvAq5tw5uDevzXdlBwy+9OTqs6ZVuRcyt+zhLaOQUUQMx8GPgGk2qmwRWJKB/aQ==
 
 "@moocar/lokijs@^1.0.1":
   version "1.0.1"
@@ -17945,10 +17945,10 @@ remark-math@^1.0.3:
   dependencies:
     trim-trailing-lines "^1.1.0"
 
-remark-mdx@^1.0.0-alpha.10:
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.0.0-alpha.10.tgz#a822c2a01c4b8f5798bf3316215c4d4c42479cea"
-  integrity sha512-WVSIEMqEjyuY2e3VoKSaISr99d9TrpLTovPRCVQba93p+4YJcjseQUt5SFmqpWwtevRh6SpOX7+t7FuS0BLPlA==
+remark-mdx@^1.0.0-alpha.13:
+  version "1.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.0.0-alpha.13.tgz#39f1fa55996d9a55d8d83418d046926ef8fd7a88"
+  integrity sha512-XgSCbCejpv6IDem9iyTLXgsVJ1X9UW/IeQU0Yi/k9Eqwynlare2t1/z989s2yD1kTdG+KTmjKsysvlrDnvvQcw==
   dependencies:
     "@babel/core" "^7.2.2"
     "@babel/helper-plugin-utils" "^7.0.0"
