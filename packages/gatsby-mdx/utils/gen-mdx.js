@@ -1,5 +1,4 @@
 const babel = require("@babel/core");
-const grayMatter = require("gray-matter");
 const { createMdxAstCompiler } = require("@mdx-js/mdx");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 
@@ -83,15 +82,11 @@ module.exports = async function genMDX({
    *   return ast;
    * }; */
 
-  // pull classic style frontmatter off the raw MDX body
-  debug("processing classic frontmatter");
-  const { content } = grayMatter(node.rawBody);
-
   // get mdast by itself
   // in the future it'd be nice to not do this twice
   debug("generating AST");
   const compiler = createMdxAstCompiler(options);
-  results.mdast = compiler.parse(content);
+  results.mdast = compiler.parse(node.rawBody);
 
   /* await mutateNode({
    *   pluginOptions,
