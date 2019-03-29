@@ -130,9 +130,9 @@ module.exports = async function(content) {
   // check needs to happen first.
   if (!hasDefaultExport(content, DEFAULT_OPTIONS) && !!defaultLayout) {
     debug("inserting default layout", defaultLayout);
-    const { content: contentWithoutFrontmatter, data } = grayMatter(content);
+    const { content: contentWithoutFrontmatter, matter } = grayMatter(content);
 
-    code = `${data ? data : ""}
+    code = `${matter ? matter : ""}
 
 import DefaultLayout from "${slash(defaultLayout)}"
 
