@@ -1,6 +1,6 @@
 const babel = require("@babel/core");
 const grayMatter = require("gray-matter");
-const mdx = require("@mdx-js/mdx");
+const { createMdxAstCompiler } = require("@mdx-js/mdx");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 
 const debug = require("debug")("gatsby-mdx:gen-mdx");
@@ -8,6 +8,7 @@ const debug = require("debug")("gatsby-mdx:gen-mdx");
 const getSourcePluginsAsRemarkPlugins = require("./get-source-plugins-as-remark-plugins");
 const htmlAttrToJSXAttr = require("./babel-plugin-html-attr-to-jsx-attr");
 const BabelPluginPluckImports = require("./babel-plugin-pluck-imports");
+const mdx = require("./mdx");
 
 /*
  * function mutateNode({
@@ -54,9 +55,12 @@ module.exports = async function genMDX({
       node.internal.contentDigest
     }-${pathPrefixCacheStr}`;
 
-  const cachedPayload = await cache.get(payloadCacheKey(node));
-  if (cachedPayload) {
-    return cachedPayload;
+  if (cache) {
+    const cachedPayload = await cache.get(payloadCacheKey(node));
+
+    if (cachedPayload) {
+      return cachedPayload;
+    }
   }
 
   let results = {
@@ -86,7 +90,7 @@ module.exports = async function genMDX({
   // get mdast by itself
   // in the future it'd be nice to not do this twice
   debug("generating AST");
-  const compiler = mdx.createMdxAstCompiler(options);
+  const compiler = createMdxAstCompiler(options);
   results.mdast = compiler.parse(content);
 
   /* await mutateNode({
@@ -112,7 +116,7 @@ module.exports = async function genMDX({
   );
 
   debug("running mdx");
-  let code = await mdx(content, {
+  let code = await mdx(node.rawBody, {
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
       gatsbyRemarkPluginsAsremarkPlugins
@@ -165,6 +169,10 @@ ${code}`;
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
    * ); */
-  cache.set(payloadCacheKey(node), results);
+
+  if (cache) {
+    cache.set(payloadCacheKey(node), results);
+  }
+
   return results;
 };

@@ -130,9 +130,9 @@ module.exports = async function(content) {
   // check needs to happen first.
   if (!hasDefaultExport(content, DEFAULT_OPTIONS) && !!defaultLayout) {
     debug("inserting default layout", defaultLayout);
-    const { content: contentWithoutFrontmatter, matter } = grayMatter(content);
+    const { content: contentWithoutFrontmatter, data } = grayMatter(content);
 
-    code = `${matter ? matter : ""}
+    code = `${data ? data : ""}
 
 import DefaultLayout from "${slash(defaultLayout)}"
 
@@ -173,7 +173,6 @@ ${contentWithoutFrontmatter}`;
     return callback(
       null,
       `import React from 'react'
-  import { MDXTag } from '@mdx-js/tag'
   ${result.code}
       `
     );
