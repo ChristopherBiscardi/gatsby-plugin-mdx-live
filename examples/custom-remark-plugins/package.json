@@ -6,8 +6,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@emotion/core": "^10.0.5",
-    "@mdx-js/mdx": "^1.0.0-alpha.13",
-    "@mdx-js/react": "^1.0.0-alpha.13",
+    "@mdx-js/mdx": "^1.0.0-alpha.16",
+    "@mdx-js/react": "^1.0.0-alpha.16",
     "emotion-theming": "^10.0.5",
     "gatsby": "2.0.76",
     "gatsby-mdx": "*",

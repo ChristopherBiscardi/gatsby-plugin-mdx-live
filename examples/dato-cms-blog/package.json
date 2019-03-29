@@ -8,8 +8,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.0.0-alpha.13",
-    "@mdx-js/react": "^1.0.0-alpha.13",
+    "@mdx-js/mdx": "^1.0.0-alpha.16",
+    "@mdx-js/react": "^1.0.0-alpha.16",
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.22",
     "gatsby-mdx": "*",

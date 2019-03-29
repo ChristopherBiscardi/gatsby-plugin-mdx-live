@@ -1878,10 +1878,10 @@
     refractor "^2.3.0"
     unist-util-visit "^1.1.3"
 
-"@mdx-js/mdx@1.0.0-alpha.13", "@mdx-js/mdx@^1.0.0-alpha.13":
-  version "1.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.0.0-alpha.13.tgz#d7d5266ca522e7ec8da6608e5500e7f58f77334e"
-  integrity sha512-l/NJibkoa7ZGL8OjqjVI47UcFXkesF4Mz3eew8koEkZTJqMWVBR4TenMa677PKHXOq5k4kmhyXMn/3YG4WioVw==
+"@mdx-js/mdx@1.0.0-alpha.16", "@mdx-js/mdx@^1.0.0-alpha.16":
+  version "1.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.0.0-alpha.16.tgz#1407dd5df5f3f60d89b88592e296dd23482f17c7"
+  integrity sha512-huwKO3M1UHRzFDnR2dn879fz2DN6YOh3mXxIGd2+QgGZdehN7X6ZVKBrAIN8o1glyHzrgmounRGeC1rFpWSSyA==
   dependencies:
     "@babel/plugin-proposal-object-rest-spread" "^7.3.2"
     "@babel/plugin-syntax-jsx" "^7.2.0"
@@ -1897,10 +1897,10 @@
     unist-builder "^1.0.1"
     unist-util-visit "^1.3.0"
 
-"@mdx-js/react@1.0.0-alpha.13", "@mdx-js/react@^1.0.0-alpha.13":
-  version "1.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.0.0-alpha.13.tgz#1058765cb8d59bfec2ce7221e311bb0d07aee486"
-  integrity sha512-CxylbBUs8C74AgSGX7UfTHPNvAq5tw5uDevzXdlBwy+9OTqs6ZVuRcyt+zhLaOQUUQMx8GPgGk2qmwRWJKB/aQ==
+"@mdx-js/react@1.0.0-alpha.16", "@mdx-js/react@^1.0.0-alpha.16":
+  version "1.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.0.0-alpha.16.tgz#eda78e6cd0f1c2cf4a2683c2e613581491dcd081"
+  integrity sha512-rb7TSTFYMBwPfgk6VsZw9zUynDofK1O7VnN2ebUjCWRVv7zzJ9tPowrd67OiEMadp8oXyRnMlNipsUc1neBBJQ==
 
 "@moocar/lokijs@^1.0.1":
   version "1.0.1"
