@@ -14,7 +14,10 @@ module.exports = {
         export default { Picker: SketchPicker }`,
         defaultLayouts: {
           posts: require.resolve("./src/components/default-post-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js")
+          default: require.resolve("./src/components/default-page-layout.js"),
+          ["non-page-default-layout"]: require.resolve(
+            "./src/components/non-page-default-post-layout.js"
+          )
         }
       }
     },
@@ -23,6 +26,13 @@ module.exports = {
       options: {
         name: "posts",
         path: `${__dirname}/content/`
+      }
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "non-page-default-layout",
+        path: `${__dirname}/content/non-page-default-layout.mdx`
       }
     },
     "gatsby-transformer-remark",
