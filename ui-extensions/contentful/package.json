@@ -14,8 +14,8 @@
   "author": "stefan judis <stefanjudis@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@mdx-js/mdx": "^1.0.0-alpha.16",
-    "@mdx-js/react": "^1.0.0-alpha.16",
+    "@mdx-js/mdx": "^1.0.0-alpha.17",
+    "@mdx-js/react": "^1.0.0-alpha.17",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-sandpack": "^1.0.0",
