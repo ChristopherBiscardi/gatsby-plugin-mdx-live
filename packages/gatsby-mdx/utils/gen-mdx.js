@@ -147,10 +147,7 @@ module.exports = async function genMDX({
   results.scopeIdentifiers = identifiers;
   // TODO: be more sophisticated about these replacements
   results.body = result.code
-    .replace(
-      /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
-      "return MDXContent;"
-    )
+    .replace(/export\s*{\s*MDXContent\s+as\s+default\s*};?/, "return MDXContent;")
     .replace(/\nexport /g, "\n");
 
   /* results.html = renderToStaticMarkup(
