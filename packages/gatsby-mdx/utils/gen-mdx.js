@@ -48,11 +48,11 @@ module.exports = async function genMDX({
   cache,
   pathPrefix
 }) {
-  const pathPrefixCacheStr = pathPrefix || ``;
-  const payloadCacheKey = node =>
-    `gatsby-mdx-entire-payload-${
-      node.internal.contentDigest
-    }-${pathPrefixCacheStr}`;
+//   const pathPrefixCacheStr = pathPrefix || ``;
+//   const payloadCacheKey = node =>
+//     `gatsby-mdx-entire-payload-${
+//       node.internal.contentDigest
+//     }-${pathPrefixCacheStr}`;
 
 //   const cachedPayload = await cache.get(payloadCacheKey(node));
 //   if (cachedPayload) {
