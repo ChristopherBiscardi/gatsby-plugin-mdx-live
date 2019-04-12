@@ -54,10 +54,10 @@ module.exports = async function genMDX({
       node.internal.contentDigest
     }-${pathPrefixCacheStr}`;
 
-  const cachedPayload = await cache.get(payloadCacheKey(node));
-  if (cachedPayload) {
-    return cachedPayload;
-  }
+//   const cachedPayload = await cache.get(payloadCacheKey(node));
+//   if (cachedPayload) {
+//     return cachedPayload;
+//   }
 
   let results = {
     mdast: undefined,
@@ -169,6 +169,6 @@ ${code}`;
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
    * ); */
-  cache.set(payloadCacheKey(node), results);
+//   cache.set(payloadCacheKey(node), results);
   return results;
 };
