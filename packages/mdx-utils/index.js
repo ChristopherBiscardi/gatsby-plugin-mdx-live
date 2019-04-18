@@ -14,15 +14,12 @@ exports.preToCodeBlock = preProps => {
       ...props
     } = preProps.children.props;
 
-    const matches = className.match(/language-(?<lang>.*)/);
+    const [, match] = className.match(/language-([\0-\uFFFF]*)/);
 
     return {
       codeString: codeString.trim(),
       className,
-      language:
-        matches && matches.groups && matches.groups.lang
-          ? matches.groups.lang
-          : "",
+      language: match ? match : "",
       ...props
     };
   }
