@@ -36,6 +36,6 @@ module.exports = function MDXRenderer({
   );
 
   return (
-    End && React.createElement(End, { components: mdxComponents, ...props })
+    React.createElement(End, { components: mdxComponents, ...props })
   );
 };
