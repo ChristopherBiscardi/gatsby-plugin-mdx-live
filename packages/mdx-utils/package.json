@@ -1,6 +1,6 @@
 {
   "name": "mdx-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT"
