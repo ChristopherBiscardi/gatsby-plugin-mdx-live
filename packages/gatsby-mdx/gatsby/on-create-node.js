@@ -125,10 +125,9 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            const loaders = node.value.indexOf("!./") > 0
-              ? node.value.replace(/(.*!)\.\/.*/, "$1")
-              : '';
-            const nodePath = node.value.replace(/.*!(\.\/.*)/, "$1");
+            let split = node.value.split('!');
+            const nodePath = split.pop();
+            const loaders = `${split.join('!')}${split.length > 0 ? '!' : ''}`;
             if (nodePath.startsWith(".")) {
               const valueAbsPath = path.resolve(parentFilepath, nodePath);
               const replacementPath = loaders + path.relative(
