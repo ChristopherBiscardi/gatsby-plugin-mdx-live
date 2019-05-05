@@ -199,7 +199,7 @@ exports.createPages = ({ graphql, actions, pathPrefix }) => {
         // this is some boilerlate to handle errors
         if (result.errors) {
           console.error(result.errors);
-          reject(result.errors);
+          throw new Error(result.errors[0]);
         }
 
         // We'll call `createPage` for each result
