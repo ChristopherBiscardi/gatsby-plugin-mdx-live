@@ -1,5 +1,5 @@
-import React from "./node_modules/react";
-import renderer from "./node_modules/react-test-renderer";
+import React from "react";
+import renderer from "react-test-renderer";
 
 import C, { SluggerReseter } from ".";
 
