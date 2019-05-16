@@ -1,11 +1,24 @@
-import React from "react";
-import GHSlugger from "github-slugger";
+import React, { useEffect, useMemo } from "./node_modules/react";
+import GHSlugger from "../node_modules/github-slugger";
+
 const slugger = new GHSlugger();
 
-const AutoLinkHeader = ({ is: Component, ...props }) => (
-  <Component id={slugger.slug(props.children)} {...props} />
-);
+const SluggerReseter = ({ children }) => {
+  useEffect(() => {
+    slugger.reset();
+  }, []);
 
-AutoLinkHeader.defaultProps = { is: "h2" };
+  return children;
+};
 
+const AutoLinkHeader = ({ as: Component = "h2", id, ...props }) => {
+  const autoId = useMemo(() => slugger.slug(id || props.children), [
+    id,
+    props.children
+  ]);
+
+  return <Component id={autoId} {...props} />;
+};
+
+export { SluggerReseter, AutoLinkHeader };
 export default AutoLinkHeader;
