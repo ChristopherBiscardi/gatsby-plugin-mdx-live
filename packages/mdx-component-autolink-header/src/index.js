@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "./node_modules/react";
-import GHSlugger from "../node_modules/github-slugger";
+import React, { useEffect, useMemo } from "react";
+import GHSlugger from "github-slugger";
 
 const slugger = new GHSlugger();
 
